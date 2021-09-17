@@ -1,11 +1,13 @@
 import { Route, Redirect, Switch } from 'react-router-dom';
 
+import MainNavigation from './shared/components/Navigation/MainNavigation';
+
 // ==============================================
 
 const App = () => {
   return (
     <>
-      {/* <MainNavigation /> */}
+      <MainNavigation />
       <Switch>
         <Route path='/' exact>
           {/* <Users /> */}
