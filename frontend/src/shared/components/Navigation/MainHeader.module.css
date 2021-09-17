@@ -12,6 +12,8 @@
   z-index: 5;
 }
 
+/* Bypasses modular css-module class-names becaues
+targeting the fundamental main element! */
 main {
   margin-top: 5rem;
 }

@@ -7,6 +7,8 @@ import {
   Switch,
 } from 'react-router-dom';
 
+import User from './user/pages/User';
+
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 import { AuthContext } from './shared/context/auth-context';
 
@@ -35,26 +37,29 @@ const App = () => {
     <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
       <Router>
         <MainNavigation />
-        <Switch>
-          <Route path='/' exact>
-            <h1>Home</h1>
-          </Route>
 
-          <Route path='/:userId/plants' exact>
-            {/* should grab all plants for currently logged in user => protected route */}
-            <h1>UserPlants</h1>
-          </Route>
+        <main>
+          <Switch>
+            <Route path='/' exact>
+              <User />
+            </Route>
 
-          <Route path='/plants/new' exact>
-            <h1>NewPlant</h1>
-          </Route>
+            <Route path='/:userId/plants' exact>
+              {/* should grab all plants for currently logged in user => protected route */}
+              <h1>UserPlants</h1>
+            </Route>
 
-          <Route path='/plants/:placeId'>
-            <h1>UpdatePlant</h1>
-          </Route>
+            <Route path='/plants/new' exact>
+              <h1>NewPlant</h1>
+            </Route>
 
-          <Redirect to='/' />
-        </Switch>
+            <Route path='/plants/:placeId'>
+              <h1>UpdatePlant</h1>
+            </Route>
+
+            <Redirect to='/' />
+          </Switch>
+        </main>
       </Router>
     </AuthContext.Provider>
   );

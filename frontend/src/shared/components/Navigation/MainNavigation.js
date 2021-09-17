@@ -11,13 +11,14 @@ const MainNavigation = (props) => {
   return (
     <>
       <MainHeader>
-        <button>
+        <button className={classes['main-navigation__menu-btn']}>
           <span></span>
           <span></span>
           <span></span>
         </button>
-        <h1>
-          <Link>Water Your Plants</Link>
+
+        <h1 className={classes['main-navigation__title']}>
+          <Link to='/'>Water Your Plants</Link>
         </h1>
 
         <nav>
