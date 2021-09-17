@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
 
 import MainHeader from './MainHeader';
+import NavLinks from './NavLinks';
 
 import classes from './MainNavigation.module.css';
 
@@ -21,25 +21,7 @@ const MainNavigation = (props) => {
         </h1>
 
         <nav>
-          <ul>
-            <li>
-              <NavLink to='/' exact>
-                Home
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink to={`/:userId/plants`}>/:userId/plants</NavLink>
-            </li>
-
-            <li>
-              <NavLink to={'plants/new'}>/plants/new</NavLink>
-            </li>
-
-            <li>
-              <NavLink to={'/auth'}>AUTHENTICATE</NavLink>
-            </li>
-          </ul>
+          <NavLinks />
         </nav>
       </MainHeader>
     </>
