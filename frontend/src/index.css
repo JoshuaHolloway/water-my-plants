@@ -22,3 +22,13 @@ code {
   justify-content: center;
   align-items: center;
 }
+
+:root {
+  --bg-primary: lightblue;
+  --bg-secondary: darkorange;
+  --bg-tertiary: darkorange;
+
+  --color-primary: white;
+  --color-secondary: black;
+  --color-tertiary: red;
+}
