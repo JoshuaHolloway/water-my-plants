@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 
 import User from './user/pages/User';
+import UsersPlants from './places/pages/UsersPlants';
 
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 import { AuthContext } from './shared/context/auth-context';
@@ -46,7 +47,7 @@ const App = () => {
 
             <Route path='/:userId/plants' exact>
               {/* should grab all plants for currently logged in user => protected route */}
-              <h1>UserPlants</h1>
+              <UsersPlants />
             </Route>
 
             <Route path='/plants/new' exact>
