@@ -23,8 +23,9 @@ const App = () => {
   // --------------------------------------------
 
   // -Only create this function on initial
-  //  execution component function
+  //  execution of component function
   const login = useCallback(() => {
+    console.log('App.js -- login()');
     setIsLoggedIn(true);
   }, []);
 
@@ -35,6 +36,12 @@ const App = () => {
   // --------------------------------------------
 
   return (
+    // -bind the value we manage with our context
+    //  (which we initialized in createContext() [auth-context.js])
+    //  to a new value (the object: {isLoggedIn, login, logout})
+    // -any time a state changes in our store
+    //  the components that subscribe
+    //  to said store re-render.
     <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
       <Router>
         <MainNavigation />
