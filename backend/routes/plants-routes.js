@@ -1,5 +1,7 @@
 const express = require('express');
 
+const HttpError = require('../models/http-error');
+
 const router = express.Router();
 
 // ==============================================
@@ -47,11 +49,16 @@ router.get('/:pid', (req, res) => {
     //  you cannot throw errors in async code [this is synchronous]).
     // next(error);
 
-    const error = new Error(
-      'Could not find a plant for the provided PLANT id!  (string arg to Error object constructor in .get(/:pid))'
+    // const error = new Error(
+    //   'Could not find a plant for the provided PLANT id!  (string arg to Error object constructor in .get(/:pid))'
+    // );
+    // error.code = 404;
+    // throw error;
+
+    throw new HttpError(
+      'Could not find a plant for the provided PLANT id!  (string arg to Error object constructor in .get(/:pid))',
+      404
     );
-    error.code = 404;
-    throw error;
   }
   res.json({ plant });
 });
@@ -69,14 +76,20 @@ router.get('/user/:uid', (req, res, next) => {
     // return res
     //   .status(404)
     //   .json({ message: 'could not find a plant for the provided user id' });
-    const error = new Error(
-      'Could not find a plant for the provided USER id!  (string arg to Error object constructor in .get(/user/:uid)'
-    );
-    error.code = 404;
-    // throw error;
-    return next(error);
+    // const error = new Error(
+    //   'Could not find a plant for the provided USER id!  (string arg to Error object constructor in .get(/user/:uid)'
+    // );
+    // error.code = 404;
+    // return next(error);
     // -return to avoid sending response outside of this if block.
     // -Returned value not used though.
+
+    return next(
+      new HttpError(
+        'Could not find a plant for the provided USER id!  (string arg to Error object constructor in .get(/user/:uid)',
+        404
+      )
+    );
   }
   res.json({ plant });
 });
