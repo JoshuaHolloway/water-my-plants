@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react';
-
 import {
   BrowserRouter as Router,
   Route,
@@ -9,8 +8,9 @@ import {
 
 import User from './user/pages/User';
 import UsersPlants from './places/pages/UsersPlants';
-
+import Auth from './user/pages/Auth';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
+
 import { AuthContext } from './shared/context/auth-context';
 
 // ==============================================
@@ -56,6 +56,10 @@ const App = () => {
 
             <Route path='/plants/:placeId'>
               <h1>UpdatePlant</h1>
+            </Route>
+
+            <Route path='/auth'>
+              <Auth />
             </Route>
 
             <Redirect to='/' />
