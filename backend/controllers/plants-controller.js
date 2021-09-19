@@ -102,7 +102,39 @@ const createPlant = (req, res, next) => {
 
 // ==============================================
 
+const updatePlant = (req, res, next) => {
+  const { /*id, */ nickname, species /*, h2ofrequency, image, creator */ } =
+    req.body;
+
+  const plantId = req.params.pid;
+
+  // const updatePlant = DUMMY_PLANTS.find(p => p.id === plantId);
+
+  // -update in an immutable way
+  // (Bad Practice [mutable]): updatePlace.nickname = nickname;
+
+  // -{ ...x} creates a new object and copies all key-value pairs
+  //  of the old object into the new object.
+  const updatedPlant = { ...DUMMY_PLANTS.find((p) => p.id === plantId) };
+  const plantIndex = DUMMY_PLANTS.findIndex((p) => p.id === plantId);
+  updatedPlant.nickname = nickname;
+  updatedPlant.species = species;
+
+  DUMMY_PLANTS[plantIndex] = updatedPlant;
+
+  // -200: Success without creating a new resource
+  res.status(200).json({ plant: updatedPlant });
+};
+
+// ==============================================
+
+const deletePlant = (req, res, next) => {};
+
+// ==============================================
+
 // module.exports;
 exports.getPlantById = getPlantById;
 exports.getPlantByUserId = getPlantByUserId;
 exports.createPlant = createPlant;
+exports.updatePlant = updatePlant;
+exports.deletePlant = deletePlant;

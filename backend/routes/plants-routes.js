@@ -30,4 +30,14 @@ router.post('/', plantsControllers.createPlant);
 
 // ==============================================
 
+// (PATCH) /api/plants/p1
+router.patch('/:pid', plantsControllers.updatePlant);
+
+// ==============================================
+
+// (DELETE) /api/plants/p1
+router.delete('/:pid', plantsControllers.deletePlant);
+
+// ==============================================
+
 module.exports = router;
