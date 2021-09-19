@@ -1,5 +1,8 @@
 (GET)
-http://localhost:5000/api/plants/p1
+  -Fake DB:
+    http://localhost:5000/api/plants/p1
+  -Real DB:
+    http://localhost:5000/api/plants/614732a96e1b297eac7f4f2d
 
 (DELETE)
 http://localhost:5000/api/plants/p1

@@ -28,14 +28,36 @@ let DUMMY_PLANTS = [
 
 // ==============================================
 
-const getPlantById = (req, res) => {
+// Read 1 (R in CRUD)
+const getPlantById = async (req, res) => {
   console.log('/api/plants/:pid');
 
   const plantId = req.params.pid; // { pid: 'p1' }
 
-  const plant = DUMMY_PLANTS.find((p) => p.id === plantId);
+  // --------------------------------------------
+
+  //const plant = DUMMY_PLANTS.find((p) => p.id === plantId);
+  let plant;
+  try {
+    // .findById is a static method (incoked on the constructor function)
+    plant = await Plant.findById(plantId); // findById() does not return a Promise here, .exec() returns a real Promise
+  } catch (err) {
+    // -Possible error 1:
+    //  --This error is thrown if the GET request has some problem.
+
+    const error = new HttpError(
+      'Something went wrong, could not find a plant!',
+      500
+    );
+    return next(error);
+  }
+
+  // --------------------------------------------
 
   if (!plant) {
+    // -Possible error 2:
+    //  --This error is thrown if we did not find the plantId in the DB
+
     // -did not find resource
     // return res
     //   .status(404)
@@ -46,8 +68,7 @@ const getPlantById = (req, res) => {
     // throw new Error();
     // -Calling next() with Error passed as arg
     //  also does same thing (with one difference:
-    //  you cannot throw errors in async code [this is synchronous]).
-    // next(error);
+    //  you cannot throw errors in async code).
 
     // const error = new Error(
     //   'Could not find a plant for the provided PLANT id!  (string arg to Error object constructor in .get(/:pid))'
@@ -55,16 +76,38 @@ const getPlantById = (req, res) => {
     // error.code = 404;
     // throw error;
 
-    throw new HttpError(
+    const error = HttpError(
       'Could not find a plant for the provided PLANT id!  (string arg to Error object constructor in .get(/:pid))',
       404
     );
+    return next(error);
+    // -cannot throw error due to this being async code.
+    // -return value is not used, but we don't want to
+    //  run the code below to send a response
+    //  since the response will be sent in the
+    //  error-handling middleware.
   }
-  res.json({ plant });
+
+  // --------------------------------------------
+
+  // res.json({ plant });
+  res.json({ plant: plant.toObject({ getters: true }) });
+  // -plant Object is a specific mongoose object
+  //  (with mongoose related methods, etc.)
+  // -the object will be easier to use if we
+  //  first convert it to a normal JS-object
+  //  before sending it in the response.
+  // -{ getters: true }  get rid of the _id
+  //  because mongoose adds an id getter
+  //  to every document that returns the id
+  //  as a string.
+  // -{ getters: true } tells mongoose to add
+  //  a .id property to the created object.
 };
 
 // ==============================================
 
+// Read 2 (R in CRUD)
 const getPlantsByUserId = (req, res, next) => {
   const userId = req.params.uid;
 
@@ -92,7 +135,7 @@ const getPlantsByUserId = (req, res, next) => {
 };
 
 // ==============================================
-
+// Create (C in CRUD)
 const createPlant = async (req, res, next) => {
   console.log('[POST]   /api/plants/');
 
@@ -136,7 +179,7 @@ const createPlant = async (req, res, next) => {
     return next(error);
   }
 
-  console.log('createdPlant try{} succeeded');
+  console.log('createdPlant try{} succeeded (check DB)');
 
   // --------------------------------------------
 
