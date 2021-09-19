@@ -34,14 +34,60 @@ const Auth = () => {
 
   // --------------------------------------------
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
+
+  // --------------------------------------------
+
   const authSumbitHandler = async (e) => {
     e.preventDefault();
     console.log({ name, email, password });
 
+    setIsLoading(true); // this causes UI to re-render
+
     if (isLoginMode) {
+      // sign-in-mode
+      try {
+        // - - - - - - - - - - - - - - - - - - -
+
+        const response = await fetch('http://localhost:5000/api/users/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        });
+
+        const responseData = await response.json();
+        console.log('responseData: ', responseData);
+
+        // -We want a 4xx or 5xx error to throw to the catch block
+        if (!response.ok) {
+          // -.ok property on the response object
+          //  is true if we have a 2xx or 3xx status code.
+          // -If we made it into this if-statement
+          //  then we got a 4xx or 5xx status code.
+          throw new Error(responseData.message);
+        }
+
+        // -Successful login
+        setIsLoading(false);
+        auth.login();
+
+        // - - - - - - - - - - - - - - - - - - -
+      } catch (err) {
+        console.log(err);
+        setIsLoading(false);
+        setError(err.message || 'something went wrong, please try again'); // || fallback if message prop does not exist
+      }
     } else {
       // sign-in-mode
       try {
+        // - - - - - - - - - - - - - - - - - - -
+
         const response = await fetch('http://localhost:5000/api/users/signup', {
           method: 'POST',
           headers: {
@@ -56,12 +102,29 @@ const Auth = () => {
 
         const responseData = await response.json();
         console.log('responseData: ', responseData);
+
+        // -We want a 4xx or 5xx error to throw to the catch block
+        if (!response.ok) {
+          // -.ok property on the response object
+          //  is true if we have a 2xx or 3xx status code.
+          // -If we made it into this if-statement
+          //  then we got a 4xx or 5xx status code.
+          throw new Error(responseData.message);
+        }
+
+        // -Successful login
+        setIsLoading(false);
+        auth.login();
+
+        // - - - - - - - - - - - - - - - - - - -
       } catch (err) {
         console.log(err);
+        setIsLoading(false);
+        setError(err.message || 'something went wrong, please try again'); // || fallback if message prop does not exist
       }
     }
 
-    auth.login();
+    setIsLoading(false);
   };
 
   // --------------------------------------------

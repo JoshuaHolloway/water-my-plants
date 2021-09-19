@@ -65,7 +65,8 @@ const login = (req, res, next) => {
     );
   }
 
-  res.json({ message: 'Logged in!' });
+  console.log('(backend) logged in!');
+  res.json({ message: 'Logged in! (sent from backend)' });
 };
 
 // ==============================================
