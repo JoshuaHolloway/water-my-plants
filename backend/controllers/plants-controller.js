@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require('uuid');
+
 const HttpError = require('../models/http-error');
 
 // ==============================================
@@ -80,6 +82,27 @@ const getPlantByUserId = (req, res, next) => {
 
 // ==============================================
 
+const createPlant = (req, res, next) => {
+  // -This works because of the body-parser
+  const { /*id, */ nickname, species, h2ofrequency, image, creator } = req.body;
+
+  const createdPlant = {
+    id: uuidv4(), // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
+    nickname,
+    species,
+    h2ofrequency,
+    image,
+    creator,
+  };
+
+  DUMMY_PLANTS.push(createdPlant);
+
+  res.status(201).json({ plant: createdPlant }); // created new resource
+};
+
+// ==============================================
+
 // module.exports;
 exports.getPlantById = getPlantById;
 exports.getPlantByUserId = getPlantByUserId;
+exports.createPlant = createPlant;

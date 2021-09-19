@@ -5,7 +5,7 @@ const router = express.Router();
 
 // ==============================================
 
-// /api/plants/
+// (GET)  /api/plants/
 router.get('/', (req, res) => {
   console.log('GET request in places');
   res.send({ message: 'Do epic shit!' });
@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 
 // ==============================================
 
-// /api/plants/p1
+// (GET)  /api/plants/p1
 router.get('/:pid', plantsControllers.getPlantById);
 
 // ==============================================
@@ -22,6 +22,11 @@ router.get('/:pid', plantsControllers.getPlantById);
 // o  (GET) /api/plants
 // 	§ Retrieve list of all plants for currently logged in user
 router.get('/user/:uid', plantsControllers.getPlantByUserId);
+
+// ==============================================
+
+// (POST)  /api/plants
+router.post('/', plantsControllers.createPlant);
 
 // ==============================================
 

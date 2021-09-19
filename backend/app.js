@@ -5,6 +5,15 @@ const plantsRoutes = require('./routes/plants-routes');
 
 const app = express();
 
+// -Parse the incoming request body
+// -We use the parsed body in the routes below.
+app.use(bodyParser.json());
+// -This will parse the incoming request body,
+//  and extract any JSON data,
+//  convert it to regular JS-data-structuers (objects and arrays)
+//  and automatically call next() to reach the
+//  following middleware that contains our custom routes.
+
 // -Add the routes (from plants-router.js)
 //  to middleware in app.js
 app.use('/api/plants', plantsRoutes);
