@@ -1,4 +1,5 @@
 const express = require('express');
+const { check } = require('express-validator');
 
 const plantsControllers = require('../controllers/plants-controller');
 const router = express.Router();
@@ -18,7 +19,20 @@ router.get('/user/:uid', plantsControllers.getPlantsByUserId);
 // ==============================================
 
 // (POST)  /api/plants
-router.post('/', plantsControllers.createPlant);
+// -Two middlewares added (check, createPlant)
+// -check() takes name of the field in the request
+//  body that we want to validate.
+// -check() runs before out controller runs.
+// -
+router.post(
+  '/',
+  [
+    check('nickname').not().isEmpty(),
+    check('species').isLength({ min: 5 }),
+    check('h20Frequency').not().isEmpty(),
+  ],
+  plantsControllers.createPlant
+);
 
 // ==============================================
 
