@@ -1,7 +1,7 @@
 (GET)
   -Fake DB:
     http://localhost:5000/api/plants/p1
-  -Real DB:
+  -Real DB: ("_id": "614732a96e1b297eac7f4f2d",)
     http://localhost:5000/api/plants/614732a96e1b297eac7f4f2d
 
 (DELETE)

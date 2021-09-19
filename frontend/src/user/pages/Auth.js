@@ -34,14 +34,33 @@ const Auth = () => {
 
   // --------------------------------------------
 
-  const onSumbitHandler = (e) => {
+  const authSumbitHandler = async (e) => {
     e.preventDefault();
-
-    // -TODO: Do HTTP request here!
-    // -TODO: Do HTTP request here!
-    // -TODO: Do HTTP request here!
-
     console.log({ name, email, password });
+
+    if (isLoginMode) {
+    } else {
+      // sign-in-mode
+      try {
+        const response = await fetch('http://localhost:5000/api/users/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            password: password,
+          }),
+        });
+
+        const responseData = await response.json();
+        console.log('responseData: ', responseData);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     auth.login();
   };
 
@@ -49,7 +68,7 @@ const Auth = () => {
 
   return (
     <>
-      <form onSubmit={onSumbitHandler}>
+      <form onSubmit={authSumbitHandler}>
         <h2>Login Required</h2>
 
         <hr />
