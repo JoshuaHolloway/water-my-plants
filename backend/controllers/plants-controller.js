@@ -7,8 +7,16 @@ const HttpError = require('../models/http-error');
 let DUMMY_PLANTS = [
   {
     id: 'p1', // o  id
-    nickname: '', // o  Nickname
+    nickname: 'plant A', // o  Nickname
     species: 'species A', // o  Species
+    h20Frequency: 1, // o  h20Frequency [units???]
+    image: '', // o  Image.
+    creator: 'u1',
+  },
+  {
+    id: 'p2', // o  id
+    nickname: 'plant B', // o  Nickname
+    species: 'species B', // o  Species
     h20Frequency: 2, // o  h20Frequency [units???]
     image: '', // o  Image.
     creator: 'u1',
@@ -54,11 +62,11 @@ const getPlantById = (req, res) => {
 
 // ==============================================
 
-const getPlantByUserId = (req, res, next) => {
+const getPlantsByUserId = (req, res, next) => {
   const userId = req.params.uid;
 
-  const plant = DUMMY_PLANTS.find((p) => p.creator === userId);
-  if (!plant) {
+  const plants = DUMMY_PLANTS.filter((p) => p.creator === userId);
+  if (!plants || plants.length === 0) {
     // return res
     //   .status(404)
     //   .json({ message: 'could not find a plant for the provided user id' });
@@ -72,12 +80,12 @@ const getPlantByUserId = (req, res, next) => {
 
     return next(
       new HttpError(
-        'Could not find a plant for the provided USER id!  (string arg to Error object constructor in .get(/user/:uid)',
+        'Could not find plants for the provided USER id!  (string arg to Error object constructor in .get(/user/:uid)',
         404
       )
     );
   }
-  res.json({ plant });
+  res.json({ plants });
 };
 
 // ==============================================
@@ -141,7 +149,7 @@ const deletePlant = (req, res, next) => {
 
 // module.exports;
 exports.getPlantById = getPlantById;
-exports.getPlantByUserId = getPlantByUserId;
+exports.getPlantsByUserId = getPlantsByUserId;
 exports.createPlant = createPlant;
 exports.updatePlant = updatePlant;
 exports.deletePlant = deletePlant;

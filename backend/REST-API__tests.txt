@@ -19,3 +19,24 @@ http://localhost:5000/api/plants/p1
   "image": "image (image)",
   "creator": "u2"
 }
+
+=================================================
+=[Users]=========================================
+
+(GET)
+http://localhost:5000/api/users
+
+(POST)
+http://localhost:5000/api/users/signup
+{
+  "name": "sergie brinn",
+  "email": "sergie@google.com",
+  "password": "google"
+}
+
+(POST)
+http://localhost:5000/api/users/login
+{
+  "email": "sergie@google.com",
+  "password": "google"
+}

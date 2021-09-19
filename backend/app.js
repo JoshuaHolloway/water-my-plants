@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const plantsRoutes = require('./routes/plants-routes');
+const usersRoutes = require('./routes/users-routes');
+
 const HttpError = require('./models/http-error');
 
 const app = express();
@@ -17,9 +19,9 @@ app.use(bodyParser.json());
 //  and automatically call next() to reach the
 //  following middleware that contains our custom routes.
 
-// -Add the routes (from plants-router.js)
-//  to middleware in app.js
+// -Add the routes to middleware
 app.use('/api/plants', plantsRoutes);
+app.use('/api/users', usersRoutes);
 
 // -Below middleware is executed only if
 //  one of the previous routes did not
