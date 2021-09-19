@@ -151,8 +151,20 @@ const deletePlant = (req, res, next) => {
   const plantId = req.params.pid;
   console.log(`[DELETE] /api/plants/${plantId}`);
 
+  // -Check to ensure the place we are trying
+  //  to delete actually exists before
+  //  deleting it.
+  if (!DUMMY_PLANTS.find((p) => p.id === plantId)) {
+    throw new HttpError('Could not find a place for that id', 404);
+  }
+
+  console.log('DUMMY_PLANTS (before deletion): ', DUMMY_PLANTS);
+
   // -overwrite original array with new array (immutably)
-  DUMMY_PLANTS = DUMMY_PLANTS.filter((p) => p.id === plantId);
+  DUMMY_PLANTS = DUMMY_PLANTS.filter((p) => p.id !== plantId);
+
+  console.log('DUMMY_PLANTS (after deletion): ', DUMMY_PLANTS);
+
   res.status(200).json({ message: 'deleted place.' });
 };
 
