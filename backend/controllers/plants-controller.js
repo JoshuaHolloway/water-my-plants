@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
-const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
+const check_errors = require('./errors');
 
 // ==============================================
 
@@ -92,18 +92,11 @@ const getPlantsByUserId = (req, res, next) => {
 // ==============================================
 
 const createPlant = (req, res, next) => {
-  // -validationResult() looks into the request
-  //  object and sees if there are any
-  //  validation erros that were detected
-  //  based on the validation setup
-  //  in plants-routes.js
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    console.log('errors: ', errors);
+  // --------------------------------------------
 
-    // !errors.isEmpty => we DO have errors!
-    throw new HttpError('Invalid inputs passed, please check your data.', 422);
-  }
+  check_errors(req);
+
+  // --------------------------------------------
 
   // -This works because of the body-parser
   const { /*id, */ nickname, species, h2ofrequency, image, creator } = req.body;
@@ -125,6 +118,10 @@ const createPlant = (req, res, next) => {
 // ==============================================
 
 const updatePlant = (req, res, next) => {
+  // --------------------------------------------
+  check_errors(req);
+  // --------------------------------------------
+
   const { /*id, */ nickname, species /*, h2ofrequency, image, creator */ } =
     req.body;
 

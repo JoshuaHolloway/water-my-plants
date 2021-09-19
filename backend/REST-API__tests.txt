@@ -8,7 +8,7 @@ http://localhost:5000/api/plants/p1
 http://localhost:5000/api/plants/p1
 {
   "nickname": "New Plant (Nickname)",
-  "species": "New Plant (Species)",
+  "species": "New Plant (Species)"
 }
 
 (POST)

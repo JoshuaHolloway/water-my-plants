@@ -29,7 +29,7 @@ router.post(
   [
     check('nickname').not().isEmpty(),
     check('species').isLength({ min: 5 }),
-    check('h20Frequency').not().isEmpty(),
+    check('h2oFrequency').not().isEmpty(),
   ],
   plantsControllers.createPlant
 );
@@ -37,7 +37,11 @@ router.post(
 // ==============================================
 
 // (PATCH) /api/plants/p1
-router.patch('/:pid', plantsControllers.updatePlant);
+router.patch(
+  '/:pid',
+  [check('nickname').not().isEmpty(), check('species').isLength({ min: 5 })],
+  plantsControllers.updatePlant
+);
 
 // ==============================================
 

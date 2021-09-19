@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 
 const HttpError = require('../models/http-error');
+const check_errors = require('./errors');
 
 // ==============================================
 
@@ -28,6 +29,10 @@ const getUsers = (req, res, next) => {
 // ==============================================
 
 const signup = (req, res, next) => {
+  // --------------------------------------------
+  check_errors(req);
+  // --------------------------------------------
+
   const { name, email, password } = req.body;
 
   const hasUser = DUMMY_USERS.find((u) => u.email === email);
