@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const plantsRoutes = require('./routes/plants-routes');
+const HttpError = require('./models/http-error');
 
 const app = express();
 
@@ -17,6 +18,15 @@ app.use(bodyParser.json());
 // -Add the routes (from plants-router.js)
 //  to middleware in app.js
 app.use('/api/plants', plantsRoutes);
+
+// -Below middleware is executed only if
+//  one of the previous routes did not
+//  send a response.
+app.use((req, res, next) => {
+  const error = new HttpError('Could not find this route - 404', 404);
+  throw error; // throw to default error handling midddleware
+});
+
 // -Using the optional first string arguement here
 //  makes express only forward requests to plantsRoutes
 //  middleware if their path starts with /api/places
