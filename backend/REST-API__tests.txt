@@ -16,7 +16,7 @@ http://localhost:5000/api/plants/
 {
   "nickname": "New Plant (Nickname)",
   "species": "New Plant (Species)",
-  "h2ofrequency": "freq (josh)",
+  "h2oFrequency": "freq (josh)",
   "image": "image (image)",
   "creator": "u2"
 }

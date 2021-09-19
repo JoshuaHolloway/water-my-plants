@@ -3,6 +3,8 @@ const { v4: uuidv4 } = require('uuid');
 const HttpError = require('../models/http-error');
 const check_errors = require('./errors');
 
+const Plant = require('../models/plant');
+
 // ==============================================
 
 let DUMMY_PLANTS = [
@@ -10,7 +12,7 @@ let DUMMY_PLANTS = [
     id: 'p1', // o  id
     nickname: 'plant A', // o  Nickname
     species: 'species A', // o  Species
-    h20Frequency: 1, // o  h20Frequency [units???]
+    h2oFrequency: 1, // o  h2oFrequency [units???]
     image: '', // o  Image.
     creator: 'u1',
   },
@@ -18,7 +20,7 @@ let DUMMY_PLANTS = [
     id: 'p2', // o  id
     nickname: 'plant B', // o  Nickname
     species: 'species B', // o  Species
-    h20Frequency: 2, // o  h20Frequency [units???]
+    h2oFrequency: 2, // o  h2oFrequency [units???]
     image: '', // o  Image.
     creator: 'u1',
   },
@@ -91,26 +93,52 @@ const getPlantsByUserId = (req, res, next) => {
 
 // ==============================================
 
-const createPlant = (req, res, next) => {
+const createPlant = async (req, res, next) => {
+  console.log('[POST]   /api/plants/');
+
   // --------------------------------------------
-
   check_errors(req);
-
   // --------------------------------------------
 
   // -This works because of the body-parser
   const { /*id, */ nickname, species, h2ofrequency, image, creator } = req.body;
 
-  const createdPlant = {
-    id: uuidv4(), // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
+  // --------------------------------------------
+
+  // const createdPlant = {
+  //   id: uuidv4(), // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
+  //   nickname,
+  //   species,
+  //   h2ofrequency,
+  //   image,
+  //   creator,
+  // };
+  const createdPlant = new Plant({
     nickname,
     species,
     h2ofrequency,
-    image,
+    image:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg',
     creator,
-  };
+  });
 
-  DUMMY_PLANTS.push(createdPlant);
+  console.log('createdPlant: ', createdPlant);
+
+  // --------------------------------------------
+
+  // DUMMY_PLANTS.push(createdPlant);
+  try {
+    console.log('createPlant, createdPlant try{}');
+    const x = await createdPlant.save(); // save() creates a unique id
+  } catch (err) {
+    console.log('.catch(err):   err: ', err);
+    const error = new HttpError('Created plant failed, please try again.', 500);
+    return next(error);
+  }
+
+  console.log('createdPlant try{} succeeded');
+
+  // --------------------------------------------
 
   res.status(201).json({ plant: createdPlant }); // created new resource
 };
