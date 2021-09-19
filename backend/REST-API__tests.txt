@@ -1,0 +1,21 @@
+(GET)
+http://localhost:5000/api/plants/p1
+
+(DELETE)
+http://localhost:5000/api/plants/p1
+
+(PATCH)
+http://localhost:5000/api/plants/p1
+{
+  "nickname": "New Plant (Nickname)",
+  "species": "New Plant (Species)",
+}
+
+(POST)
+{
+  "nickname": "New Plant (Nickname)",
+  "species": "New Plant (Species)",
+  "h2ofrequency": "freq (josh)",
+  "image": "image (image)",
+  "creator": "u2"
+}

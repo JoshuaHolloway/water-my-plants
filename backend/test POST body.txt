@@ -1,7 +1,0 @@
-{
-  "nickname": "Empire State Building A",
-  "species": "descrption",
-  "h2ofrequency": "address 1234",
-  "cimage": "60fd4a45de48da386c71710b",
-  "creator": "u1"
-}

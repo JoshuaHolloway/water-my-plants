@@ -4,7 +4,7 @@ const HttpError = require('../models/http-error');
 
 // ==============================================
 
-const DUMMY_PLANTS = [
+let DUMMY_PLANTS = [
   {
     id: 'p1', // o  id
     nickname: '', // o  Nickname
@@ -128,7 +128,14 @@ const updatePlant = (req, res, next) => {
 
 // ==============================================
 
-const deletePlant = (req, res, next) => {};
+const deletePlant = (req, res, next) => {
+  const plantId = req.params.pid;
+  console.log(`[DELETE] /api/plants/${plantId}`);
+
+  // -overwrite original array with new array (immutably)
+  DUMMY_PLANTS = DUMMY_PLANTS.filter((p) => p.id === plantId);
+  res.status(200).json({ message: 'deleted place.' });
+};
 
 // ==============================================
 
