@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const plantsRoutes = require('./routes/plants-routes');
 const usersRoutes = require('./routes/users-routes');
@@ -64,4 +65,22 @@ app.use((error, req, res, next) => {
 
 // ==============================================
 
-app.listen(5e3, () => console.log('localhost:5000'));
+// -Step 1: Establish connection to database
+// -Step 2: (if step 1 is successful) Start backend server
+mongoose
+  .connect(
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.almxm.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => {
+    console.log('Connected to database!');
+    app.listen(5e3, () => {
+      'listening on port 5e3';
+    });
+  })
+  .catch(() => {
+    console.log('Connection to DB failed!');
+  });
+// returns a promise,
+
+// ==============================================
