@@ -45,6 +45,67 @@ http://localhost:5000/api/users/signup
   "password": "google",
   "plants": "p1"
 }
+// After doing the session / transaction stuff:
+{
+  "name": "new new",
+  "email": "post@post.com",
+  "password": "password"
+}
+// -Then, response should look like:
+{
+    "user": {
+        "plants": [],
+        "_id": "614818b742a63c0ec4b6f669",
+        "name": "new new",
+        "email": "post@post.com",
+        "password": "password",
+        "__v": 0,
+        "id": "614818b742a63c0ec4b6f669"
+    }
+}
+// -Then, copy the USER _id (614818b742a63c0ec4b6f669)
+//  to allocate this plant to a specific user.
+// -This is just during development, 
+//  before we add true authentication.
+// -Send POST request to http://localhost:5000/api/plants/
+//  with the following:
+{
+  "nickname": "New Plant (Nickname)",
+  "species": "New Plant (Species)",
+  "h2oFrequency": "2",
+  "creator": "614818b742a63c0ec4b6f669"
+}
+// -Currently not using "h2oFrequency": "freq (josh)" in the POST request.
+// -Verify this in plant.js model and in createPlant() function 
+//  in plants-controller.js because there is some issue with 
+//  the requirement of this in the model.
+// -You can still send it in the request, but the value is
+//  not used when placing the request body data into the
+//  db via the model usage.
+// -Note that the backend validation on the body 
+//  data being sent is also diabled concerning the 
+//  h2oFrequency
+// -This can be verified in plants-routes.js in the
+//  route handler for '/'.
+// -The following response is returned from POST to http://localhost:5000/api/plants/
+{
+    "plant": {
+        "_id": "61481ef92f41a750d4ba78ea",
+        "nickname": "New Plant (Nickname)",
+        "species": "New Plant (Species)",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg",
+        "creator": "614818b742a63c0ec4b6f669",
+        "__v": 0
+    }
+}
+// -Look in the DB under USERS to see the plant added 
+//  to the array that stores the plants for the User.
+// -Furthermore, if you try to create a new plant
+//  with a user id that is not in the db 
+//  the db will not be modified and an error
+//  is sent in the response.
+
+// - - - - - - - - - - - - - - - - - - - - - - - 
 
 (POST)
 http://localhost:5000/api/users/login

@@ -29,7 +29,7 @@ router.post(
   [
     check('nickname').not().isEmpty(),
     check('species').isLength({ min: 5 }),
-    check('h2oFrequency').not().isEmpty(),
+    // check('h2oFrequency').not().isEmpty(),
   ],
   plantsControllers.createPlant
 );

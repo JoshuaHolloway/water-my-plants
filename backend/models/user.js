@@ -12,7 +12,12 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, minlength: 6 },
   // image: { type: String, required: true },
-  plants: { type: String, required: true },
+  // plants: { type: String, required: true },
+  plants: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Plant' }],
+  // -One user can have multiple plants
+  // -Therefore, need an array to tell
+  //  mongoose that documents based on this schema
+  //  we have multiple plants entries.
 });
 
 // ==============================================

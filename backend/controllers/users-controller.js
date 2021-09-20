@@ -27,6 +27,7 @@ const DUMMY_USERS = [
 const getUsers = async (req, res, next) => {
   let users;
   try {
+    // -Return only email and name (exclude password)
     users = await User.find({}, '-password');
   } catch (err) {
     const error = new HttpError(
@@ -35,8 +36,8 @@ const getUsers = async (req, res, next) => {
     );
     return next(error);
   }
-  res.json({ users: users.map((user) => user.toObject({ getters: true })) });
   // res.status(200).json({ users: DUMMY_USERS });
+  res.json({ users: users.map((user) => user.toObject({ getters: true })) });
 };
 
 // ==============================================
@@ -47,7 +48,7 @@ const signup = async (req, res, next) => {
   check_errors(req, next);
   // --------------------------------------------
 
-  const { name, email, password, plants } = req.body;
+  const { name, email, password } = req.body;
 
   // const hasUser = DUMMY_USERS.find((u) => u.email === email);
   // if (hasUser) {
@@ -86,7 +87,7 @@ const signup = async (req, res, next) => {
     email,
     // image: 'https://live.staticflickr.com/7631/26849088292_36fc52ee90_b.jpg',
     password /* NOT ENCRYPTED! */,
-    plants,
+    plants: [],
   });
 
   try {
