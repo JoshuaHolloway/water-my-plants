@@ -108,10 +108,26 @@ const getPlantById = async (req, res) => {
 // ==============================================
 
 // Read 2 (R in CRUD)
-const getPlantsByUserId = (req, res, next) => {
+const getPlantsByUserId = async (req, res, next) => {
   const userId = req.params.uid;
 
-  const plants = DUMMY_PLANTS.filter((p) => p.creator === userId);
+  // --------------------------------------------
+  // const plants = DUMMY_PLANTS.filter((p) => p.creator === userId);
+  let plants;
+  try {
+    // -.find() returns all occurences of elements that match the query.
+    // -.find() in mongodb returns a cursor that we can iterate through.
+    // -.find() in mongoose returns an actual array.
+    plants = await Plant.find({ creator: userId });
+  } catch (err) {
+    const error = new HttpError(
+      'Fetching plants failed, please try again later',
+      500
+    );
+    return next(error);
+  }
+  // --------------------------------------------
+
   if (!plants || plants.length === 0) {
     // return res
     //   .status(404)
@@ -131,7 +147,11 @@ const getPlantsByUserId = (req, res, next) => {
       )
     );
   }
-  res.json({ plants });
+
+  // res.json({ plants });
+  res.json({
+    plants: plants.map((plant) => plant.toObject({ getters: true })),
+  });
 };
 
 // ==============================================
@@ -140,7 +160,7 @@ const createPlant = async (req, res, next) => {
   console.log('[POST]   /api/plants/');
 
   // --------------------------------------------
-  check_errors(req);
+  check_errors(req, next);
   // --------------------------------------------
 
   // -This works because of the body-parser
@@ -188,9 +208,9 @@ const createPlant = async (req, res, next) => {
 
 // ==============================================
 
-const updatePlant = (req, res, next) => {
+const updatePlant = async (req, res, next) => {
   // --------------------------------------------
-  check_errors(req);
+  check_errors(req, next);
   // --------------------------------------------
 
   const { /*id, */ nickname, species /*, h2ofrequency, image, creator */ } =
@@ -203,40 +223,85 @@ const updatePlant = (req, res, next) => {
   // -update in an immutable way
   // (Bad Practice [mutable]): updatePlace.nickname = nickname;
 
-  // -{ ...x} creates a new object and copies all key-value pairs
-  //  of the old object into the new object.
-  const updatedPlant = { ...DUMMY_PLANTS.find((p) => p.id === plantId) };
-  const plantIndex = DUMMY_PLANTS.findIndex((p) => p.id === plantId);
-  updatedPlant.nickname = nickname;
-  updatedPlant.species = species;
+  // // -{ ...x} creates a new object and copies all key-value pairs
+  // //  of the old object into the new object.
+  // const updatedPlant = { ...DUMMY_PLANTS.find((p) => p.id === plantId) };
+  // const plantIndex = DUMMY_PLANTS.findIndex((p) => p.id === plantId);
+  // updatedPlant.nickname = nickname;
+  // updatedPlant.species = species;
+  // DUMMY_PLANTS[plantIndex] = updatedPlant;
 
-  DUMMY_PLANTS[plantIndex] = updatedPlant;
+  let plant;
+  try {
+    plant = await Plant.findById(plantId);
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not update plant.',
+      500
+    );
+    return next(error);
+  }
+
+  plant.nickname = nickname;
+  plant.species = species;
+
+  console.log('DEBUG');
+  console.log('plant: ', plant);
+
+  try {
+    await plant.save();
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not update plant.',
+      500
+    );
+    return next(error);
+  }
 
   // -200: Success without creating a new resource
-  res.status(200).json({ plant: updatedPlant });
+  // res.status(200).json({ plant: updatedPlant });
+  res.status(200).json({ plant: plant.toObject({ getters: true }) });
 };
 
 // ==============================================
 
-const deletePlant = (req, res, next) => {
+const deletePlant = async (req, res, next) => {
   const plantId = req.params.pid;
   console.log(`[DELETE] /api/plants/${plantId}`);
 
-  // -Check to ensure the place we are trying
-  //  to delete actually exists before
-  //  deleting it.
-  if (!DUMMY_PLANTS.find((p) => p.id === plantId)) {
-    throw new HttpError('Could not find a place for that id', 404);
+  // // -Check to ensure the place we are trying
+  // //  to delete actually exists before
+  // //  deleting it.
+  // if (!DUMMY_PLANTS.find((p) => p.id === plantId)) {
+  //   throw new HttpError('Could not find a place for that id', 404);
+  // }
+  // console.log('DUMMY_PLANTS (before deletion): ', DUMMY_PLANTS);
+  // // -overwrite original array with new array (immutably)
+  // DUMMY_PLANTS = DUMMY_PLANTS.filter((p) => p.id !== plantId);
+  // console.log('DUMMY_PLANTS (after deletion): ', DUMMY_PLANTS);
+
+  let plant;
+  try {
+    plant = await Plant.findById(plantId);
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not delete plant.',
+      500
+    );
+    return next(error);
   }
 
-  console.log('DUMMY_PLANTS (before deletion): ', DUMMY_PLANTS);
+  try {
+    await plant.remove();
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not delete plant.',
+      500
+    );
+    return next(error);
+  }
 
-  // -overwrite original array with new array (immutably)
-  DUMMY_PLANTS = DUMMY_PLANTS.filter((p) => p.id !== plantId);
-
-  console.log('DUMMY_PLANTS (after deletion): ', DUMMY_PLANTS);
-
-  res.status(200).json({ message: 'deleted place.' });
+  res.status(200).json({ message: 'deleted plant.' });
 };
 
 // ==============================================
