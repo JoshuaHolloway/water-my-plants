@@ -20,7 +20,15 @@ const check_errors = (req, next) => {
       'Invalid inputs passed, please check your data.',
       422
     );
-    next(error);
+    return next(error);
+    // -return value not actually used,
+    //  but don't want to execute any
+    //  code below this where functino is
+    //  called (specifically, don't want to
+    //  send multiple responses, as a
+    //  response is sent in the error-handling
+    //  middleware that next(error)
+    //  goes to in app.js).
   }
 };
 

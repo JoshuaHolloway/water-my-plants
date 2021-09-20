@@ -9,6 +9,7 @@ http://localhost:5000/api/plants/p1
 
 (PATCH)
 http://localhost:5000/api/plants/p1
+http://localhost:5000/api/plants/61473272be47765d00a01ee0
 {
   "nickname": "New Plant (Nickname)",
   "species": "New Plant (Species)"
@@ -36,6 +37,13 @@ http://localhost:5000/api/users/signup
   "name": "sergie brinn",
   "email": "sergie@google.com",
   "password": "google"
+}
+// DUMMY PLANTS (after setting up DB connection for signup but before creating full model relation between plants and users)
+{
+  "name": "sergie brinn",
+  "email": "sergie@google.com",
+  "password": "google",
+  "plants": "p1"
 }
 
 (POST)
