@@ -108,12 +108,33 @@ const signup = async (req, res, next) => {
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 
-  const identifiedUser = DUMMY_USERS.find((u) => u.email === email);
-  if (!identifiedUser || identifiedUser.password !== password) {
-    throw new HttpError(
+  // --------------------------------------------
+
+  // const identifiedUser = DUMMY_USERS.find((u) => u.email === email);
+  let existingUser;
+
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (err) {
+    const error = new HttpError(
+      'Logging in failed, please try again later.',
+      500
+    );
+    return next(error);
+  }
+
+  // --------------------------------------------
+
+  if (!existingUser || existingUser.password !== password) {
+    // throw new HttpError(
+    //   'Could not identify user, credentials seem to be wrong.',
+    //   401
+    // );
+    const error = new HttpError(
       'Could not identify user, credentials seem to be wrong.',
       401
     );
+    return next(error);
   }
 
   console.log('(backend) logged in!');
