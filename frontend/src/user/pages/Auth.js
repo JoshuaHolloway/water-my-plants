@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 
+import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 
 // ==============================================
@@ -8,6 +9,10 @@ const Auth = () => {
   // --------------------------------------------
 
   const auth = useContext(AuthContext);
+
+  // --------------------------------------------
+
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   // --------------------------------------------
 
@@ -34,97 +39,62 @@ const Auth = () => {
 
   // --------------------------------------------
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(undefined);
-
-  // --------------------------------------------
-
   const authSumbitHandler = async (e) => {
     e.preventDefault();
     console.log({ name, email, password });
 
-    setIsLoading(true); // this causes UI to re-render
-
     if (isLoginMode) {
-      // sign-in-mode
-      try {
-        // - - - - - - - - - - - - - - - - - - -
+      // log-in-mode
+      // log-in-mode
+      // log-in-mode
 
-        const response = await fetch('http://localhost:5000/api/users/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
+      try {
+        await sendRequest(
+          'http://localhost:5000/api/users/login',
+          'POST',
+          JSON.stringify({
             email: email,
             password: password,
           }),
-        });
-
-        const responseData = await response.json();
-        console.log('responseData: ', responseData);
-
-        // -We want a 4xx or 5xx error to throw to the catch block
-        if (!response.ok) {
-          // -.ok property on the response object
-          //  is true if we have a 2xx or 3xx status code.
-          // -If we made it into this if-statement
-          //  then we got a 4xx or 5xx status code.
-          throw new Error(responseData.message);
-        }
+          { 'Content-Type': 'application/json' }
+        );
 
         // -Successful login
-        setIsLoading(false);
         auth.login();
-
-        // - - - - - - - - - - - - - - - - - - -
       } catch (err) {
-        console.log(err);
-        setIsLoading(false);
-        setError(err.message || 'something went wrong, please try again'); // || fallback if message prop does not exist
+        // -Failed login
+        console.log('failed login:  err: ', err);
       }
     } else {
       // sign-in-mode
-      try {
-        // - - - - - - - - - - - - - - - - - - -
+      // sign-in-mode
+      // sign-in-mode
 
-        const response = await fetch('http://localhost:5000/api/users/signup', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
+      try {
+        await sendRequest(
+          'http://localhost:5000/api/users/signup',
+          'POST',
+          JSON.stringify({
             name: name,
             email: email,
             password: password,
           }),
-        });
-
-        const responseData = await response.json();
-        console.log('responseData: ', responseData);
-
-        // -We want a 4xx or 5xx error to throw to the catch block
-        if (!response.ok) {
-          // -.ok property on the response object
-          //  is true if we have a 2xx or 3xx status code.
-          // -If we made it into this if-statement
-          //  then we got a 4xx or 5xx status code.
-          throw new Error(responseData.message);
-        }
+          { 'Content-Type': 'application/json' }
+        );
 
         // -Successful login
-        setIsLoading(false);
         auth.login();
-
-        // - - - - - - - - - - - - - - - - - - -
       } catch (err) {
-        console.log(err);
-        setIsLoading(false);
-        setError(err.message || 'something went wrong, please try again'); // || fallback if message prop does not exist
+        // -Failed login
+        console.log('failed login:  err: ', err);
       }
     }
+  };
 
-    setIsLoading(false);
+  // --------------------------------------------
+
+  const errorHandler = () => {
+    clearError();
   };
 
   // --------------------------------------------
