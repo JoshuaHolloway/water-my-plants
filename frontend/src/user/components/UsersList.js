@@ -16,7 +16,17 @@ const UsersList = (props) => {
       UsersList
       {props.items &&
         props.items.map((item) => {
-          return <li>x: {item.name}</li>;
+          return (
+            <>
+              <li key={item.id}>
+                <ul>
+                  <li>{item.name}</li>
+                  <li>{item.id}</li>
+                </ul>
+              </li>
+              <hr />
+            </>
+          );
         })}
     </ul>
   );

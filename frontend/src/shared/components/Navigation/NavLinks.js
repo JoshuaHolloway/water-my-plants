@@ -11,6 +11,8 @@ const NavLinks = (props) => {
 
   const auth = useContext(AuthContext);
 
+  console.log('NavLinks.js -- auth.userId: ', auth.userId);
+
   // --------------------------------------------
 
   return (
@@ -24,7 +26,7 @@ const NavLinks = (props) => {
       {auth.isLoggedIn && (
         <li>
           {/* <NavLink to={`/:userId/plants`}>MY PLANTS</NavLink> */}
-          <NavLink to={`/u1/plants`}>MY PLANTS</NavLink>
+          <NavLink to={`/${auth.userId}/plants`}>MY PLANTS</NavLink>
         </li>
       )}
 
