@@ -6,7 +6,7 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import User from './user/pages/User';
+import Users from './user/pages/Users';
 import UsersPlants from './places/pages/UsersPlants';
 import Auth from './user/pages/Auth';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
@@ -42,7 +42,7 @@ const App = () => {
       <Switch>
         <Route path='/' exact>
           {/* Logged-in user homepage */}
-          <User />
+          <Users />
         </Route>
 
         <Route path='/:userId/plants' exact>
@@ -66,7 +66,7 @@ const App = () => {
       <Switch>
         <Route path='/' exact>
           {/* TODO: Change to public homepage */}
-          <User />
+          <Users />
         </Route>
 
         <Route path='/auth'>
