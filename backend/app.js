@@ -53,7 +53,7 @@ app.use((req, res, next) => {
 
 // -Using the optional first string arguement here
 //  makes express only forward requests to plantsRoutes
-//  middleware if their path starts with /api/places
+//  middleware if their path starts with /api/plant
 
 // -Error handling middleware
 // -Four args => special middleware function

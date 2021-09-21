@@ -7,10 +7,10 @@ import {
 } from 'react-router-dom';
 
 import Users from './user/pages/Users';
-import UsersPlants from './places/pages/UsersPlants';
+import UsersPlants from './plants/pages/UsersPlants';
 import Auth from './user/pages/Auth';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
-import NewPlant from './places/pages/NewPlant';
+import NewPlant from './plants/pages/NewPlant';
 
 import { AuthContext } from './shared/context/auth-context';
 

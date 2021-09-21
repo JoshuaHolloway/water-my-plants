@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -10,6 +11,11 @@ const NewPlant = () => {
 
   // -Set up listener to auth context
   const auth = useContext(AuthContext);
+
+  // --------------------------------------------
+
+  // -Prepare page redirect
+  const history = useHistory();
 
   // --------------------------------------------
 
@@ -71,7 +77,8 @@ const NewPlant = () => {
         responseData
       );
 
-      // TODO: Redirect the user to a differnt page
+      // -Redirect the user to homepage
+      history.push('/');
     } catch (err) {
       console.log('err: ', err);
     }
