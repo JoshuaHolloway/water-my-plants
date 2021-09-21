@@ -10,6 +10,7 @@ const check_errors = require('./errors');
 
 const Plant = require('../models/plant');
 const User = require('../models/user');
+const user = require('../models/user');
 
 // ==============================================
 
@@ -198,7 +199,7 @@ const createPlant = async (req, res, next) => {
 
   // -Before saving the plant, we must check whether
   //  the user-id we provided exists already.
-  // -Only allow the creation of a new place
+  // -Only allow the creation of a new plant
   //  if the user is created with the corresponding ID.
   let user;
 
@@ -250,7 +251,7 @@ const createPlant = async (req, res, next) => {
     //  our users document.
     //
     // -This is our current session that we want
-    //  to start when we create the new place.
+    //  to start when we create the new plant.
     const sess = await mongoose.startSession();
 
     // -Since the session is now started, we can begin our transaction.
@@ -298,7 +299,7 @@ const createPlant = async (req, res, next) => {
     //
   } catch (err) {
     const error = new HttpError(
-      'Creating place failed, please try again.',
+      'Creating plant failed, please try again.',
       500
     );
     return next(error);
@@ -338,7 +339,7 @@ const updatePlant = async (req, res, next) => {
   // const updatePlant = DUMMY_PLANTS.find(p => p.id === plantId);
 
   // -update in an immutable way
-  // (Bad Practice [mutable]): updatePlace.nickname = nickname;
+  // (Bad Practice [mutable]): updatePlant.nickname = nickname;
 
   // // -{ ...x} creates a new object and copies all key-value pairs
   // //  of the old object into the new object.
@@ -382,15 +383,15 @@ const updatePlant = async (req, res, next) => {
 
 // ==============================================
 
-const deletePlant = async (req, res, next) => {
+const deletePlant_non_transaction = async (req, res, next) => {
   const plantId = req.params.pid;
   console.log(`[DELETE] /api/plants/${plantId}`);
 
-  // // -Check to ensure the place we are trying
+  // // -Check to ensure the plant we are trying
   // //  to delete actually exists before
   // //  deleting it.
   // if (!DUMMY_PLANTS.find((p) => p.id === plantId)) {
-  //   throw new HttpError('Could not find a place for that id', 404);
+  //   throw new HttpError('Could not find a plant for that id', 404);
   // }
   // console.log('DUMMY_PLANTS (before deletion): ', DUMMY_PLANTS);
   // // -overwrite original array with new array (immutably)
@@ -419,6 +420,47 @@ const deletePlant = async (req, res, next) => {
   }
 
   res.status(200).json({ message: 'deleted plant.' });
+};
+
+// ==============================================
+
+const deletePlant = async (req, res, next) => {
+  const plantId = req.params.pid;
+
+  let plant;
+  try {
+    plant = await Plant.findById(plantId).populate('creator');
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not delete plant.',
+      500
+    );
+    return next(error);
+  }
+
+  if (!plant) {
+    const error = new HttpError('Could not find plant for this id.', 404);
+    return next(error);
+  }
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await plant.remove({ session: sess });
+
+    plant.creator.plants.pull(plant);
+    await plant.creator.save({ session: sess });
+
+    await sess.commitTransaction();
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not delete plant.',
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({ message: 'Deleted plant.' });
 };
 
 // ==============================================
