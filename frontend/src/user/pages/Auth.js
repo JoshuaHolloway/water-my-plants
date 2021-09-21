@@ -49,7 +49,7 @@ const Auth = () => {
       // log-in-mode
 
       try {
-        await sendRequest(
+        const reponseData = await sendRequest(
           'http://localhost:5000/api/users/login',
           'POST',
           JSON.stringify({
@@ -60,7 +60,7 @@ const Auth = () => {
         );
 
         // -Successful login
-        auth.login();
+        auth.login(reponseData.user.id);
       } catch (err) {
         // -Failed login
         console.log('failed login:  err: ', err);
@@ -71,7 +71,7 @@ const Auth = () => {
       // sign-in-mode
 
       try {
-        await sendRequest(
+        const reponseData = await sendRequest(
           'http://localhost:5000/api/users/signup',
           'POST',
           JSON.stringify({
@@ -83,7 +83,7 @@ const Auth = () => {
         );
 
         // -Successful login
-        auth.login();
+        auth.login(reponseData.user.id);
       } catch (err) {
         // -Failed login
         console.log('failed login:  err: ', err);

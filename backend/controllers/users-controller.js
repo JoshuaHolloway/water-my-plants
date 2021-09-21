@@ -139,7 +139,10 @@ const login = async (req, res, next) => {
   }
 
   console.log('(backend) logged in!');
-  res.json({ message: 'Logged in! (sent from backend)' });
+  res.json({
+    message: 'Logged in! (sent from backend)',
+    user: existingUser.toObject({ getters: true }),
+  });
 };
 
 // ==============================================

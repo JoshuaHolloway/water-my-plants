@@ -1,9 +1,19 @@
 import { useState, useEffect, useContext } from 'react';
 
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
+
 // ==============================================
 
-const NewPlace = () => {
+const NewPlant = () => {
   // --------------------------------------------
+
+  // -Set up listener to auth context
+  const auth = useContext(AuthContext);
+
+  // --------------------------------------------
+
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   // -Plant model (expected shape of data on backend)
   // const plantSchema = new Schema({
@@ -35,7 +45,7 @@ const NewPlace = () => {
 
   // --------------------------------------------
 
-  const plantSubmitHandler = (event) => {
+  const plantSubmitHandler = async (event) => {
     event.preventDefault();
 
     const plant = {
@@ -43,10 +53,28 @@ const NewPlace = () => {
       species, //: { type: String, required: true },
       image, //: { type: String, required: true },
       h2oFrequency: h2oFreq, //: { type: String, required: true }, // number?
-      // creator, //: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
+      creator: auth.userId, //: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
     };
 
     console.log('plant form data: ', plant); // send this to the backend!
+
+    try {
+      const responseData = await sendRequest(
+        'http://localhost:5000/api/plants',
+        'POST',
+        JSON.stringify(plant),
+        { 'Content-Type': 'application/json' }
+      );
+
+      console.log(
+        'responseData - NewPlant.js - plantSubmitHandler() : ',
+        responseData
+      );
+
+      // TODO: Redirect the user to a differnt page
+    } catch (err) {
+      console.log('err: ', err);
+    }
   };
 
   // --------------------------------------------
@@ -63,6 +91,8 @@ const NewPlace = () => {
         />
       </label>
 
+      <br />
+
       <label htmlFor='species'>
         Species:
         <input
@@ -72,6 +102,8 @@ const NewPlace = () => {
           onChange={onSpeciesChangeHandler}
         />
       </label>
+
+      <br />
 
       <label htmlFor='image'>
         Image:
@@ -83,6 +115,8 @@ const NewPlace = () => {
         />
       </label>
 
+      <br />
+
       <label htmlFor='h2oFreq'>
         h2oFrequency:
         <input
@@ -93,7 +127,9 @@ const NewPlace = () => {
         />
       </label>
 
-      <button type='submit'></button>
+      <br />
+
+      <button type='submit'>Submit</button>
     </form>
   );
 
@@ -102,4 +138,4 @@ const NewPlace = () => {
 
 // ==============================================
 
-export default NewPlace;
+export default NewPlant;

@@ -1,3 +1,7 @@
+// NOTE: plants collection must be created in advance on in the DB
+//       due to transactions / sessions not being able to
+//       create a collection on-the-fly.
+
 const { v4: uuidv4 } = require('uuid');
 const mongoose = require('mongoose');
 

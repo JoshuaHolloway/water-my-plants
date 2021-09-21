@@ -10,6 +10,7 @@ import Users from './user/pages/Users';
 import UsersPlants from './places/pages/UsersPlants';
 import Auth from './user/pages/Auth';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
+import NewPlant from './places/pages/NewPlant';
 
 import { AuthContext } from './shared/context/auth-context';
 
@@ -19,18 +20,21 @@ const App = () => {
   // --------------------------------------------
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(false);
 
   // --------------------------------------------
 
   // -Only create this function on initial
   //  execution of component function
-  const login = useCallback(() => {
+  const login = useCallback((uid) => {
     console.log('App.js -- login()');
     setIsLoggedIn(true);
+    setUserId(uid);
   }, []);
 
   const logout = useCallback(() => {
     setIsLoggedIn(false);
+    setUserId(null);
   }, []);
 
   // --------------------------------------------
@@ -51,7 +55,7 @@ const App = () => {
         </Route>
 
         <Route path='/plants/new' exact>
-          <h1>NewPlant</h1>
+          <NewPlant />
         </Route>
 
         <Route path='/plants/:placeId'>
@@ -87,7 +91,7 @@ const App = () => {
     // -any time a state changes in our store
     //  the components that subscribe
     //  to said store re-render.
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, userId, login, logout }}>
       <Router>
         <MainNavigation />
         <main>{routes}</main>
