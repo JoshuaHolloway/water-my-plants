@@ -16,9 +16,9 @@ const Auth = () => {
 
   // --------------------------------------------
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState('blue');
+  const [email, setEmail] = useState('blue@blue.com');
+  const [password, setPassword] = useState('blueblue');
 
   useEffect(() => console.log('name: ', name), [name]);
   useEffect(() => console.log('email: ', email), [email]);
@@ -60,7 +60,7 @@ const Auth = () => {
         );
 
         // -Successful login
-        auth.login(reponseData.user.id);
+        auth.login(reponseData.userId);
       } catch (err) {
         // -Failed login
         console.log('failed login:  err: ', err);

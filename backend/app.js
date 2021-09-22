@@ -61,23 +61,19 @@ app.use((req, res, next) => {
 // -The callback function will run if any middleware
 //  in front of this yields an error.
 app.use((error, req, res, next) => {
-  // -Check to see if response has already
-  //  been sent.
-  // -If that is the case, then we want to
-  //  return next, and forward the error.
-  // -In other words, we won't send a response
-  //  on our own, because somehow we
-  //  already have sent a response.
+  console.log('error handling middleware!');
+  console.log('error handling middleware!');
+
+  if (req.file) {
+    fs.unlink(req.file.path, (err) => {
+      console.log(err);
+    });
+  }
   if (res.headerSent) {
     return next(error);
   }
-
-  // -Set status code on response
-  // -If code property on error object passed in
-  //  then use it,
-  //  else, set 500 status.
   res.status(error.code || 500);
-  res.json({ message: error.message || 'An unknown error occured!' });
+  res.json({ message: error.message || 'An unknown error occurred!' });
 });
 
 // ==============================================

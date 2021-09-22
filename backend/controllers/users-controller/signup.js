@@ -23,11 +23,11 @@ const signup = async (req, res, next) => {
   try {
     existingUser = await User.findOne({ email: email });
   } catch (err) {
-    server_error();
+    server_error(next);
   }
 
   if (existingUser) {
-    err_f('User exists already, please login instead.', 422);
+    err_f('User exists already, please login instead.', 422, next);
   }
 
   // --------------------------------------------
@@ -37,7 +37,7 @@ const signup = async (req, res, next) => {
     const salts = 12;
     hashedPassword = await bcrypt.hash(password, salts);
   } catch (err) {
-    server_error();
+    server_error(next);
   }
   // const createdUser = {
   //   id: uuidv4(),
@@ -57,7 +57,7 @@ const signup = async (req, res, next) => {
   try {
     await createdUser.save();
   } catch (err) {
-    server_error();
+    server_error(next);
   }
 
   // --------------------------------------------
@@ -69,7 +69,7 @@ const signup = async (req, res, next) => {
   try {
     token = jwt.sign(payload, privateKey, tokenConfig);
   } catch (err) {
-    server_error();
+    server_error(next);
   }
   // --------------------------------------------
 
