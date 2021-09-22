@@ -11,6 +11,7 @@ import UsersPlants from './plants/pages/UsersPlants';
 import Auth from './user/pages/Auth';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 import NewPlant from './plants/pages/NewPlant';
+import UpdatePlant from './plants/pages/UpdatePlant';
 
 import { AuthContext } from './shared/context/auth-context';
 
@@ -48,20 +49,18 @@ const App = () => {
           {/* Logged-in user homepage */}
           <Users />
         </Route>
-
         <Route path='/:userId/plants' exact>
           {/* should grab all plants for currently logged in user => protected route */}
           <UsersPlants />
         </Route>
-
         <Route path='/plants/new' exact>
           <NewPlant />
         </Route>
 
-        <Route path='/plants/:placeId'>
-          <h1>UpdatePlant</h1>
+        {/* This route does not work even if logged in! */}
+        <Route path='/plants/:plantId'>
+          <UpdatePlant />
         </Route>
-
         <Redirect to='/' />
       </Switch>
     );

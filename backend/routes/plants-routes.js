@@ -7,6 +7,7 @@ const router = express.Router();
 // ==============================================
 
 // (GET)  /api/plants/p1
+// -Get specific plant (based on plant-id)
 router.get('/:pid', plantsControllers.getPlantById);
 
 // ==============================================

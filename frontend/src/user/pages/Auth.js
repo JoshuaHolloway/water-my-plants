@@ -83,7 +83,7 @@ const Auth = () => {
         );
 
         // -Successful login
-        auth.login(reponseData.user.id);
+        auth.login(reponseData.userId);
       } catch (err) {
         // -Failed login
         console.log('failed login:  err: ', err);
