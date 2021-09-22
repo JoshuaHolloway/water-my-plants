@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -20,7 +20,6 @@ import { AuthContext } from './shared/context/auth-context';
 const App = () => {
   // --------------------------------------------
 
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState(false); // null ?  or undefined ?
   const [userId, setUserId] = useState(false);
 
@@ -30,16 +29,32 @@ const App = () => {
   //  execution of component function
   const login = useCallback((uid, token) => {
     console.log('App.js -- login()');
-    // setIsLoggedIn(true);
     setToken(token);
     setUserId(uid);
+    localStorage.setItem(
+      'userData',
+      JSON.stringify({ userId: uid, token: token })
+    );
   }, []);
 
   const logout = useCallback(() => {
-    // setIsLoggedIn(false);
     setToken(null);
     setUserId(null);
+    localStorage.removeItem('userData');
   }, []);
+
+  // --------------------------------------------
+
+  // -useEffect will run AFTER the component mounts
+  // -This is AFTER the render cycle.
+  useEffect(() => {
+    // -Auto-log-in the user if the JWT is in local-storage.
+    const storedData = JSON.parse(localStorage.getItem('userData'));
+    if (storedData && storedData.token) {
+      // -If we have the JWT, then log user in:
+      login(storedData.userId, storedData.token);
+    }
+  }, [login]);
 
   // --------------------------------------------
 
