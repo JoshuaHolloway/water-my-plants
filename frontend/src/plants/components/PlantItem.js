@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -39,6 +40,9 @@ const PlaceItem = (props) => {
       <div>
         <h2>{props.nickname}</h2>
         <button onClick={onDeleteHandler}>DELETE</button>
+        <button>
+          <NavLink to={`/plants/${props.id}`}>UPDATE</NavLink>
+        </button>
       </div>
     </li>
   );

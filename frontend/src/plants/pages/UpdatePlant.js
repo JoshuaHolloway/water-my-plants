@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+// import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -9,8 +10,20 @@ import { AuthContext } from '../../shared/context/auth-context';
 const UpdatePlant = () => {
   // --------------------------------------------
 
-  // /plants/:plantId'
-  const plantId = useParams.plantId;
+  // /plants/:pid'
+  const plantId = useParams().plantId;
+  console.log('plantId: ', plantId);
+
+  // const [plantId, setPlantId] = useState('');
+  // useEffect(() => {
+  //   console.log('useParams: ', useParams);
+  //   const x = useParams().plantId;
+  //   setPlantId(x);
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log('plantId: ', plantId);
+  // }, [plantId]);
 
   // --------------------------------------------
 
@@ -20,7 +33,7 @@ const UpdatePlant = () => {
   // --------------------------------------------
 
   // -Prepare page redirect
-  const history = useHistory();
+  // const history = useHistory();
 
   // --------------------------------------------
 
@@ -70,8 +83,8 @@ const UpdatePlant = () => {
 
     try {
       const responseData = await sendRequest(
-        'http://localhost:5000/api/plants',
-        'POST',
+        `http://localhost:5000/api/plants/${plantId}`,
+        'PATCH',
         JSON.stringify(plant),
         {
           'Content-Type': 'application/json',
@@ -80,12 +93,12 @@ const UpdatePlant = () => {
       );
 
       console.log(
-        'responseData - NewPlant.js - plantSubmitHandler() : ',
+        'responseData - UpdatePlant.js - plantSubmitHandler() : ',
         responseData
       );
 
       // -Redirect the user to homepage
-      history.push('/');
+      // history.push('/');
     } catch (err) {
       console.log('err: ', err);
     }

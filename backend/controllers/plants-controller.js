@@ -14,27 +14,6 @@ const user = require('../models/user');
 
 // ==============================================
 
-let DUMMY_PLANTS = [
-  {
-    id: 'p1', // o  id
-    nickname: 'plant A', // o  Nickname
-    species: 'species A', // o  Species
-    h2oFrequency: 1, // o  h2oFrequency [units???]
-    image: '', // o  Image.
-    creator: 'u1',
-  },
-  {
-    id: 'p2', // o  id
-    nickname: 'plant B', // o  Nickname
-    species: 'species B', // o  Species
-    h2oFrequency: 2, // o  h2oFrequency [units???]
-    image: '', // o  Image.
-    creator: 'u1',
-  },
-];
-
-// ==============================================
-
 // Read 1 (R in CRUD)
 const getPlantById = async (req, res) => {
   console.log('/api/plants/:pid');
