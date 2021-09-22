@@ -22,6 +22,7 @@ const PlantList = (props) => {
             // creatorId={place.creator}
             // coordinates={place.location}
             // onDelete={props.onDeletePlace}
+            onDelete={props.onDeletePlant}
           />
         );
       })}
