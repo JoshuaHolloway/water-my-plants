@@ -9,7 +9,7 @@ const err_f = (err_str, status_code, next) => {
 
 // ==============================================
 
-const invalid_credentials_error = (next, status_code = 401) =>
+const invalid_credentials_error = (next, status_code = 403) =>
   err_f(
     'Could not identify user, credentials seem to be wrong.',
     status_code,

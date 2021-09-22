@@ -57,6 +57,11 @@ const updatePlant = async (req, res, next) => {
   //  which attaches the plant to the currently
   //  logged in user (the type is a mongoose specific type,
   //  hence, we must cast it to a string to compare against it.)
+  // -plant.creator is just the id here due to
+  //  not needing to do .populate('creator');
+  //  as is done in deletePlants().
+  // -In deletePlants() controller,
+  //  the creator is an entire User object.
   if (plant.creator.toString() !== req.userData.userId) {
     const error = new HttpError('You are not allowed to edit this plant.', 401);
     return next(error);
