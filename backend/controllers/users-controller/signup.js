@@ -64,7 +64,7 @@ const signup = async (req, res, next) => {
 
   let token;
   const payload = { userId: createdUser.id, email: createdUser.email }; // data to be encoded in token
-  const privateKey = 'josh-private-key-shhhhh!!!';
+  const privateKey = 'supersecret_dont_share';
   const tokenConfig = { expiresIn: '1h' };
   try {
     token = jwt.sign(payload, privateKey, tokenConfig);

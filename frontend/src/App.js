@@ -20,21 +20,24 @@ import { AuthContext } from './shared/context/auth-context';
 const App = () => {
   // --------------------------------------------
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(false); // null ?  or undefined ?
   const [userId, setUserId] = useState(false);
 
   // --------------------------------------------
 
   // -Only create this function on initial
   //  execution of component function
-  const login = useCallback((uid) => {
+  const login = useCallback((uid, token) => {
     console.log('App.js -- login()');
-    setIsLoggedIn(true);
+    // setIsLoggedIn(true);
+    setToken(token);
     setUserId(uid);
   }, []);
 
   const logout = useCallback(() => {
-    setIsLoggedIn(false);
+    // setIsLoggedIn(false);
+    setToken(null);
     setUserId(null);
   }, []);
 
@@ -42,7 +45,7 @@ const App = () => {
 
   let routes;
 
-  if (isLoggedIn) {
+  if (token) {
     routes = (
       <Switch>
         <Route path='/' exact>
@@ -90,7 +93,9 @@ const App = () => {
     // -any time a state changes in our store
     //  the components that subscribe
     //  to said store re-render.
-    <AuthContext.Provider value={{ isLoggedIn, userId, login, logout }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn: !!token, token, userId, login, logout }}
+    >
       <Router>
         <MainNavigation />
         <main>{routes}</main>

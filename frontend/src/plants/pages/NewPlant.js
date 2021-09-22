@@ -69,7 +69,10 @@ const NewPlant = () => {
         'http://localhost:5000/api/plants',
         'POST',
         JSON.stringify(plant),
-        { 'Content-Type': 'application/json' }
+        {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${auth.token}`,
+        }
       );
 
       console.log(

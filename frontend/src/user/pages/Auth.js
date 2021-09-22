@@ -60,7 +60,7 @@ const Auth = () => {
         );
 
         // -Successful login
-        auth.login(reponseData.userId);
+        auth.login(reponseData.userId, reponseData.token);
       } catch (err) {
         // -Failed login
         console.log('failed login:  err: ', err);

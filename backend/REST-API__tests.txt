@@ -110,6 +110,6 @@ http://localhost:5000/api/users/signup
 (POST)
 http://localhost:5000/api/users/login
 {
-  "email": "sergie@google.com",
-  "password": "google"
+  "email": "red@red.com",
+  "password": "redred"
 }
