@@ -46,6 +46,22 @@ const updatePlant = async (req, res, next) => {
     return next(error);
   }
 
+  // -Authorization
+  // -Ensure the user that is trying to modify the plant
+  //  actually is the user that created the plant.
+  // -userData is added as a property to the req
+  //  object in the check-auth.js middleware
+  //  upon checking the JWT attached to the
+  //  incoming request.
+  // -plant.creator is set in the Plant model
+  //  which attaches the plant to the currently
+  //  logged in user (the type is a mongoose specific type,
+  //  hence, we must cast it to a string to compare against it.)
+  if (plant.creator.toString() !== req.userData.userId) {
+    const error = new HttpError('You are not allowed to edit this plant.', 401);
+    return next(error);
+  }
+
   plant.nickname = nickname;
   plant.species = species;
 
