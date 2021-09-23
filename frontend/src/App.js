@@ -67,15 +67,15 @@ const App = () => {
           {/* Logged-in user homepage */}
           <Users />
         </Route>
+
         <Route path='/:userId/plants' exact>
-          {/* should grab all plants for currently logged in user => protected route */}
           <UsersPlants />
         </Route>
+
         <Route path='/plants/new' exact>
           <NewPlant />
         </Route>
 
-        {/* This route does not work even if logged in! */}
         <Route path='/plants/:plantId'>
           <UpdatePlant />
         </Route>

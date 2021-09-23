@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-// import { useParams, useHistory } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -33,7 +32,7 @@ const UpdatePlant = () => {
   // --------------------------------------------
 
   // -Prepare page redirect
-  // const history = useHistory();
+  const history = useHistory();
 
   // --------------------------------------------
 
@@ -58,15 +57,27 @@ const UpdatePlant = () => {
 
   // -Send request when page loads to load latest plant data
   useEffect(() => {
+    console.clear();
     const fetchData = async () => {
-      const responseData = await sendRequest(`/api/plants/${plantId}`);
+      console.log('async fetchData()');
 
-      console.log(
-        'UpdatePlant() GET request to /api/plants -- responseData: ',
-        responseData
-      );
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/plants/${plantId}`,
+          'GET',
+          null,
+          {
+            Authorization: `Bearer ${auth.token}`,
+          }
+        );
+
+        setNickname(responseData.plant.nickname);
+        setSpecies(responseData.plant.species);
+      } catch (err) {
+        console.log('error sending request to api/plants/:plantId');
+      }
     };
-    fetchData('/');
+    fetchData();
   }, []);
 
   // --------------------------------------------
@@ -98,7 +109,8 @@ const UpdatePlant = () => {
       );
 
       // -Redirect the user to homepage
-      // history.push('/');
+      // history.push(`/:userId/plants`);
+      history.push(`/${auth.userId}/plants`);
     } catch (err) {
       console.log('err: ', err);
     }
@@ -108,6 +120,8 @@ const UpdatePlant = () => {
 
   return (
     <form onSubmit={plantSubmitHandler}>
+      <h5>Update Plant</h5>
+
       <label htmlFor='nickname'>
         Nickname:
         <input

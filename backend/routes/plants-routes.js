@@ -8,12 +8,6 @@ const plantsControllers = require('../controllers/plants-controller');
 
 // ==============================================
 
-// (GET)  /api/plants/p1
-// -Get specific plant (based on plant-id)
-router.get('/:pid', plantsControllers.getPlantById);
-
-// ==============================================
-
 // -register middleware for protected routes below
 router.use(checkAuth);
 // -All routes below are protected and
@@ -60,6 +54,13 @@ router.patch(
   [check('nickname').not().isEmpty(), check('species').isLength({ min: 5 })],
   plantsControllers.updatePlant
 );
+
+// ==============================================
+
+// (GET)  /api/plants/p1
+// -Get specific plant (based on plant-id)
+router.get('/:pid', plantsControllers.getPlantById);
+// -Currently only using in UpdatePlant.js in frontend
 
 // ==============================================
 
