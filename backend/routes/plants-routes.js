@@ -17,6 +17,11 @@ router.get('/:pid', plantsControllers.getPlantById);
 // /api/plants/user/u1
 // o  (GET) /api/plants
 // 	§ Retrieve list of all plants for currently logged in user
+//  TODO: Currently works if ANY user is logged in.
+//        -Change this in the following ways:
+//          --Move to protected routes (place below checkAuth middleware)
+//          --Extract user-id from req.userData.userId
+//            which is set in the checkAuth middleware.
 router.get('/user/:uid', plantsControllers.getPlantsByUserId);
 
 // ==============================================

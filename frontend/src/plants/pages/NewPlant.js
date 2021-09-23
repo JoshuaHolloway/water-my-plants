@@ -59,7 +59,7 @@ const NewPlant = () => {
       species, //: { type: String, required: true },
       image, //: { type: String, required: true },
       h2oFrequency: h2oFreq, //: { type: String, required: true }, // number?
-      creator: auth.userId, //: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
+      // creator: auth.userId -- NOT NEEDED because we grab the user id from the decoded JWT on the backend after storing in the the checkAuth middleware
     };
 
     console.log('plant form data: ', plant); // send this to the backend!
