@@ -14,6 +14,16 @@ router.get('/:pid', plantsControllers.getPlantById);
 
 // ==============================================
 
+// -register middleware for protected routes below
+router.use(checkAuth);
+// -All routes below are protected and
+//  can only be reached with a valid token
+
+// ==============================================
+// == BELOW ARE PROTECTED ROUTES
+// == Hackers: Please do NOT hack below routes :)
+// ==============================================
+
 // /api/plants/user/u1
 // o  (GET) /api/plants
 // 	§ Retrieve list of all plants for currently logged in user
@@ -23,13 +33,6 @@ router.get('/:pid', plantsControllers.getPlantById);
 //          --Extract user-id from req.userData.userId
 //            which is set in the checkAuth middleware.
 router.get('/user/:uid', plantsControllers.getPlantsByUserId);
-
-// ==============================================
-
-// -register middleware for protected routes below
-router.use(checkAuth);
-// -All routes below are protected and
-//  can only be reached with a valid token
 
 // ==============================================
 

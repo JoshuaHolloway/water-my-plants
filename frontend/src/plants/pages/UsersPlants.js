@@ -1,14 +1,19 @@
-import { useEffect, useState } from 'react';
-
+import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useHttpClient } from '../../shared/hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
 
 import PlantList from '../components/PlantList';
 
 // ==============================================
 
 const UsersPlants = () => {
+  // --------------------------------------------
+
+  // -Set up listener to auth context
+  const auth = useContext(AuthContext);
+
   // --------------------------------------------
 
   const [loadedPlants, setLoadedPlants] = useState();
@@ -28,7 +33,12 @@ const UsersPlants = () => {
     const fetchPlants = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/plants/user/${userId}`
+          `http://localhost:5000/api/plants/user/${userId}`,
+          'GET', // method
+          null, // body
+          {
+            Authorization: `Bearer ${auth.token}`,
+          } // headers
         );
 
         setLoadedPlants(responseData.plants);
