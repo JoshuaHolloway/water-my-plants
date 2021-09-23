@@ -24,30 +24,32 @@ const UsersPlants = () => {
 
   // --------------------------------------------
 
-  const userId = useParams().userId;
+  // const userId = useParams().userId;
   // const loadedPlants = DUMMY_PLANTS.filter((plant) => plant.creator === userId);
 
   // --------------------------------------------
 
   useEffect(() => {
-    const fetchPlants = async () => {
-      try {
-        const responseData = await sendRequest(
-          `http://localhost:5000/api/plants/user/${userId}`,
-          'GET', // method
-          null, // body
-          {
-            Authorization: `Bearer ${auth.token}`,
-          } // headers
-        );
+    if (auth.userId) {
+      const fetchPlants = async () => {
+        try {
+          const responseData = await sendRequest(
+            `http://localhost:5000/api/plants/user/${auth.userId}`,
+            'GET', // method
+            null, // body
+            {
+              Authorization: `Bearer ${auth.token}`,
+            } // headers
+          );
 
-        setLoadedPlants(responseData.plants);
-      } catch (err) {
-        console.log('(UsersPlants.js) err: ', err);
-      }
-    };
-    fetchPlants();
-  }, [sendRequest, userId]);
+          setLoadedPlants(responseData.plants);
+        } catch (err) {
+          console.log('(UsersPlants.js) err: ', err);
+        }
+      };
+      fetchPlants();
+    }
+  }, [auth.userId]);
 
   // --------------------------------------------
 

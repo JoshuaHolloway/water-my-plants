@@ -65,7 +65,8 @@ const App = () => {
       <Switch>
         <Route path='/' exact>
           {/* Logged-in user homepage */}
-          <Users />
+          {/* <Users /> */}
+          <UsersPlants />
         </Route>
 
         <Route path='/:userId/plants' exact>
@@ -86,8 +87,8 @@ const App = () => {
     routes = (
       <Switch>
         <Route path='/' exact>
-          {/* TODO: Change to public homepage */}
-          <Users />
+          {/* <Users /> */}
+          <Redirect to='/auth' />
         </Route>
 
         <Route path='/auth'>
