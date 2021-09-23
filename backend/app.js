@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const path = require('path');
+const webpush = require('web-push');
 
 const plantsRoutes = require('./routes/plants-routes');
 const usersRoutes = require('./routes/users-routes');
@@ -10,6 +12,9 @@ const HttpError = require('./models/http-error');
 const app = express();
 
 // ==============================================
+
+// Set static path (for PUSH notifications)
+app.use(express.static(path.join(__dirname, 'client')));
 
 // -Parse the incoming request body
 // -We use the parsed body in the routes below.
@@ -33,6 +38,48 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
 
   next();
+});
+
+// ==============================================
+// =PUSH NOTIFICATIONS===========================
+// ==============================================
+
+const publicVapidKey =
+  'BJthRQ5myDgc7OSXzPCMftGw-n16F7zQBEN7EUD6XxcfTTvrLGWSIG7y_JxiWtVlCFua0S8MTB5rPziBqNx1qIo';
+const privateVapidKey = '3KzvKasA2SoCxsp0iIG_o9B0Ozvl1XDwI63JRKNIWBM';
+
+webpush.setVapidDetails(
+  'mailto:test@test.com',
+  publicVapidKey,
+  privateVapidKey
+);
+
+// Subscribe Route
+app.post('/subscribe', (req, res) => {
+  // Get pushSubscription object
+  const subscription = req.body;
+
+  // Send 201 - resource created
+  res.status(201).json({});
+
+  // Create payload
+  const payload = JSON.stringify({ title: 'Push Test' });
+
+  const web_push_callback = () => {
+    // Pass object into sendNotification
+    webpush
+      .sendNotification(subscription, payload)
+      .catch((err) => console.error(err));
+  };
+
+  const intervalID = setInterval(
+    web_push_callback,
+    2000,
+    'Parameter 1',
+    'Parameter 2'
+  );
+
+  // web_push_callback();
 });
 
 // ==============================================
