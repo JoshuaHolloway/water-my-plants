@@ -1,5 +1,6 @@
 const express = require('express');
 const { check } = require('express-validator');
+const webpush = require('web-push');
 
 const checkAuth = require('../middleware/check-auth');
 
@@ -7,6 +8,32 @@ const router = express.Router();
 const plantsControllers = require('../controllers/plants-controller');
 
 // ==============================================
+
+// [GET] /api/plants/
+router.post('/', async (req, res, next) => {
+  console.log('POST to /  (DEBUG)');
+  // if (req.method === 'OPTIONS') {
+  //   return next();
+  // }
+
+  // Subscribe Route
+  // app.post('/subscribe', (req, res) => {
+  // console.log('/subscribe');
+
+  // Get pushSubscription object
+  const subscription = req.body;
+  console.log('subscription: ', subscription);
+
+  // Send 201 - resource created
+  res.status(201).json({});
+
+  // Create payload
+  const payload = JSON.stringify({ title: 'Push Test' });
+
+  webpush
+    .sendNotification(subscription, payload)
+    .catch((err) => console.error('JOSH\nJOSH\nJOSH\nJOSH: ', err));
+});
 
 // -register middleware for protected routes below
 router.use(checkAuth);

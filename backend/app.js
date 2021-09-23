@@ -14,7 +14,7 @@ const app = express();
 // ==============================================
 
 // Set static path (for PUSH notifications)
-app.use(express.static(path.join(__dirname, 'client')));
+// app.use(express.static(path.join(__dirname, 'client')));
 
 // -Parse the incoming request body
 // -We use the parsed body in the routes below.
@@ -54,33 +54,12 @@ webpush.setVapidDetails(
   privateVapidKey
 );
 
-// Subscribe Route
-app.post('/subscribe', (req, res) => {
-  // Get pushSubscription object
-  const subscription = req.body;
-
-  // Send 201 - resource created
-  res.status(201).json({});
-
-  // Create payload
-  const payload = JSON.stringify({ title: 'Push Test' });
-
-  const web_push_callback = () => {
-    // Pass object into sendNotification
-    webpush
-      .sendNotification(subscription, payload)
-      .catch((err) => console.error(err));
-  };
-
-  const intervalID = setInterval(
-    web_push_callback,
-    2000,
-    'Parameter 1',
-    'Parameter 2'
-  );
-
-  // web_push_callback();
-});
+// app.post('/*', (req, res) => {
+//   console.log('(DEBUG)  req: ', req);
+//   if (req.method === 'OPTIONS') {
+//     return next();
+//   }
+// });
 
 // ==============================================
 
@@ -110,6 +89,7 @@ app.use((req, res, next) => {
 app.use((error, req, res, next) => {
   console.log('error handling middleware!');
   console.log('error handling middleware!');
+  console.log('error.message: ', error.message);
 
   if (req.file) {
     fs.unlink(req.file.path, (err) => {
