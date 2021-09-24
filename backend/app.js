@@ -41,27 +41,6 @@ app.use((req, res, next) => {
 });
 
 // ==============================================
-// =PUSH NOTIFICATIONS===========================
-// ==============================================
-
-const publicVapidKey =
-  'BJthRQ5myDgc7OSXzPCMftGw-n16F7zQBEN7EUD6XxcfTTvrLGWSIG7y_JxiWtVlCFua0S8MTB5rPziBqNx1qIo';
-const privateVapidKey = '3KzvKasA2SoCxsp0iIG_o9B0Ozvl1XDwI63JRKNIWBM';
-
-webpush.setVapidDetails(
-  'mailto:test@test.com',
-  publicVapidKey,
-  privateVapidKey
-);
-
-// app.post('/*', (req, res) => {
-//   console.log('(DEBUG)  req: ', req);
-//   if (req.method === 'OPTIONS') {
-//     return next();
-//   }
-// });
-
-// ==============================================
 
 // -Add the routes to middleware
 app.use('/api/plants', plantsRoutes);

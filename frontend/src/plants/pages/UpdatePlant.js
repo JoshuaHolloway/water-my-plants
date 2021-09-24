@@ -36,11 +36,12 @@ const UpdatePlant = () => {
 
   // --------------------------------------------
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  // const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { sendRequest } = useHttpClient();
 
   // --------------------------------------------
 
-  const [loadedPlant, setLoadedPlant] = useState();
+  // const [loadedPlant, setLoadedPlant] = useState();
 
   // --------------------------------------------
 
@@ -78,7 +79,7 @@ const UpdatePlant = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [auth.token, plantId, sendRequest]);
 
   // --------------------------------------------
 

@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -20,7 +20,7 @@ const UsersPlants = () => {
 
   // --------------------------------------------
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, sendRequest } = useHttpClient();
 
   // --------------------------------------------
 
@@ -49,7 +49,7 @@ const UsersPlants = () => {
       };
       fetchPlants();
     }
-  }, [auth.userId]);
+  }, [auth.userId, auth.token, sendRequest]);
 
   // --------------------------------------------
 

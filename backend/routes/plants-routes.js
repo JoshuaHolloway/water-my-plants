@@ -10,7 +10,7 @@ const plantsControllers = require('../controllers/plants-controller');
 // ==============================================
 
 // [GET] /api/plants/
-router.post('/', async (req, res, next) => {
+router.post('/subscribe-to-push', async (req, res, next) => {
   console.log('POST to /  (DEBUG)');
   // if (req.method === 'OPTIONS') {
   //   return next();

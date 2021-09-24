@@ -19,7 +19,8 @@ const NewPlant = () => {
 
   // --------------------------------------------
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  // const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { sendRequest } = useHttpClient();
 
   // -Plant model (expected shape of data on backend)
   // const plantSchema = new Schema({
@@ -37,10 +38,26 @@ const NewPlant = () => {
   const [h2oFreq, setH2oFreq] = useState('');
   // const [creator, setCreator] = useState('');
 
-  useEffect(() => console.log('nickname: ', nickname), [nickname]);
-  useEffect(() => console.log('species: ', species), [species]);
-  useEffect(() => console.log('image: ', image), [image]);
-  useEffect(() => console.log('h2oFreq: ', h2oFreq), [h2oFreq]);
+  useEffect(() => {
+    if (nickname) {
+      console.log('nickname: ', nickname);
+    }
+  }, [nickname]);
+  useEffect(() => {
+    if (species) {
+      console.log('species: ', species);
+    }
+  }, [species]);
+  useEffect(() => {
+    if (image) {
+      console.log('image: ', image);
+    }
+  }, [image]);
+  useEffect(() => {
+    if (h2oFreq) {
+      console.log('h2oFreq: ', h2oFreq);
+    }
+  }, [h2oFreq]);
   // useEffect(() => console.log('creator: ', creator), [creator]);
 
   const onNicknameChangeHandler = (e) => setNickname(e.target.value);

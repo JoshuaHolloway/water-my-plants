@@ -12,13 +12,14 @@ const Auth = () => {
 
   // --------------------------------------------
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  // const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { sendRequest } = useHttpClient();
 
   // --------------------------------------------
 
-  const [name, setName] = useState('blue');
-  const [email, setEmail] = useState('blue@blue.com');
-  const [password, setPassword] = useState('blueblue');
+  const [name, setName] = useState('josh');
+  const [email, setEmail] = useState('josh@josh.com');
+  const [password, setPassword] = useState('password');
 
   useEffect(() => console.log('name: ', name), [name]);
   useEffect(() => console.log('email: ', email), [email]);
@@ -93,12 +94,6 @@ const Auth = () => {
 
   // --------------------------------------------
 
-  const errorHandler = () => {
-    clearError();
-  };
-
-  // --------------------------------------------
-
   const do_push = () => {
     // ----------------------------------------------
 
@@ -134,7 +129,7 @@ const Auth = () => {
       // Send Push Notification
       console.log('Sending Push...');
 
-      await fetch('http://localhost:5000/api/plants', {
+      await fetch('http://localhost:5000/api/plants/subscribe-to-push', {
         method: 'POST',
         body: JSON.stringify(subscription),
         headers: {
