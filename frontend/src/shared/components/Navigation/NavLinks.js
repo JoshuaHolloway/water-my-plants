@@ -14,7 +14,6 @@ const NavLinks = (props) => {
   console.log('NavLinks.js -- auth.userId: ', auth.userId);
 
   // --------------------------------------------
-
   return (
     <ul className={classes['nav-links']}>
       {auth.isLoggedIn && (
