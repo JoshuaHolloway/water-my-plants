@@ -1,0 +1,26 @@
+.main-header {
+  width: 100%;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-primary);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.26);
+  padding: 0 1rem;
+  /* border: dashed yellow 5px; */
+}
+
+/* Bypasses modular css-module class-names becaues
+targeting the fundamental main element! */
+/* Push the main section down to account for navbar. */
+main {
+  margin-top: 5rem;
+}
+
+.nav {
+  /* border: solid 2px purple; */
+}
+
+.logo {
+  /* border: solid 2px red; */
+}
