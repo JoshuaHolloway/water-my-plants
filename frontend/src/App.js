@@ -150,6 +150,8 @@ const App = () => {
         </Transition>
 
         <main>{routes}</main>
+
+        <p>Process.env.NODE_ENV: {process.env.NODE_ENV}</p>
       </Router>
     </AuthContext.Provider>
   );

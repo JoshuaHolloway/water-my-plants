@@ -2,12 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
-const webpush = require('web-push');
+// const webpush = require('web-push');
 
 const plantsRoutes = require('./routes/plants-routes');
 const usersRoutes = require('./routes/users-routes');
 
-const HttpError = require('./models/http-error');
+// const HttpError = require('./models/http-error');
 
 const app = express();
 
