@@ -20,6 +20,13 @@ router.post('/', async (req, res, next) => {
   const subscription = req.body;
   console.log('subscription: ', subscription);
 
+  // -Get data encoded in headers for the h2o-freq:
+  const push_reg_hr = Number(req.headers.push_reg_hr);
+  console.log('push_reg_hr: ', push_reg_hr);
+
+  const push_reg_min = Number(req.headers.push_reg_min);
+  console.log('push_reg_min: ', push_reg_min);
+
   // Send 201 - resource created
   res.status(201).json({});
 
@@ -34,9 +41,9 @@ router.post('/', async (req, res, next) => {
 
   const now = new Date();
   console.log('time is currently: ', now.getHours(), ' : ', now.getMinutes());
-  const hours = 9;
-  const minutes = 25;
-  const seconds = 30;
+  const hours = push_reg_hr;
+  const minutes = push_reg_min;
+  const seconds = 0;
   const ms = 0;
   let millisTill_specified_time =
     new Date(
