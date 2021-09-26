@@ -4,7 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 
-import register_push from '../../shared/helpers/do_push';
+// import register_push from '../../shared/helpers/do_push';
+import register_push_repeat from '../../shared/helpers/register_repeated_push';
 
 // ==============================================
 
@@ -99,10 +100,15 @@ const NewPlant = () => {
         responseData
       );
 
+      const remind_in_x_mins = 60 / h2oFreq;
+      console.log(`Need to water ${h2oFreq}-times per hour.`);
+      console.log(`Remind every ${remind_in_x_mins}-minutes.`);
+
       // -Plant has been added successfully.
       // -Register push notifications according to
       //  specified h2o-frequency:
-      register_push(10, 4);
+      // register_push(10, 4);
+      register_push_repeat(remind_in_x_mins);
 
       // -Redirect the user to homepage
       history.push('/');

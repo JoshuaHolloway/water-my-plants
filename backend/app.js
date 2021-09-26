@@ -42,7 +42,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
     'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization, Push_reg_hr, Push_reg_min'
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization, Push_reg_hr, Push_reg_min, Repeat_every_x_mins'
   );
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
 

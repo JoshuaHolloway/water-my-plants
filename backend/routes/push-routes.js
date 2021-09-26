@@ -21,11 +21,8 @@ router.post('/', async (req, res, next) => {
   console.log('subscription: ', subscription);
 
   // -Get data encoded in headers for the h2o-freq:
-  const push_reg_hr = Number(req.headers.push_reg_hr);
-  console.log('push_reg_hr: ', push_reg_hr);
-
-  const push_reg_min = Number(req.headers.push_reg_min);
-  console.log('push_reg_min: ', push_reg_min);
+  const repeat_every_x_mins = Number(req.headers.repeat_every_x_mins);
+  console.log('repeat_every_x_mins: ', repeat_every_x_mins);
 
   // Send 201 - resource created
   res.status(201).json({});
@@ -37,35 +34,48 @@ router.post('/', async (req, res, next) => {
       .sendNotification(subscription, payload)
       .catch((err) => console.error('JOSH\nJOSH\nJOSH\nJOSH: ', err));
   };
-  set_push('Initial Push');
+  // set_push('Initial Push');
 
   const now = new Date();
   console.log('time is currently: ', now.getHours(), ' : ', now.getMinutes());
-  const hours = push_reg_hr;
-  const minutes = push_reg_min;
-  const seconds = 0;
-  const ms = 0;
-  let millisTill_specified_time =
-    new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate(),
-      hours,
-      minutes,
-      seconds,
-      ms
-    ) - now;
-  if (millisTill_specified_time < 0) {
-    millisTill_specified_time += 86400000; // it's after 10am, try 10am tomorrow.
-  }
-  setTimeout(function () {
-    console.log("It's time!!!");
-    set_push('Timed Push');
-  }, millisTill_specified_time);
+  // const hours = push_reg_hr;
+  // const minutes = push_reg_min;
+  // const seconds = 0;
+  // const ms = 0;
+  // let millisTill_specified_time =
+  //   new Date(
+  //     now.getFullYear(),
+  //     now.getMonth(),
+  //     now.getDate(),
+  //     hours,
+  //     minutes,
+  //     seconds,
+  //     ms
+  //   ) - now;
+  // if (millisTill_specified_time < 0) {
+  //   millisTill_specified_time += 86400000; // it's after 10am, try 10am tomorrow.
+  // }
+  // setTimeout(function () {
+  //   console.log("It's time!!!");
+  //   set_push('Timed Push');
+  // }, millisTill_specified_time);
+
+  const milliseconds = repeat_every_x_mins * 60 * 1e3;
 
   setInterval(() => {
+    console.log("It's time!!!");
+    set_push('Timed Push');
+  }, milliseconds);
+
+  let count = 0;
+  setInterval(() => {
     const t = new Date();
-    console.log(`${t.getHours()} : ${t.getMinutes()} : ${t.getSeconds()}`);
+    count = (count + 1) % 60;
+    console.log(
+      `${t.getHours()} : ${t.getMinutes()} : ${t.getSeconds()} \t countdown: ${
+        repeat_every_x_mins * 60 - count
+      }`
+    );
   }, 1e3);
 });
 
