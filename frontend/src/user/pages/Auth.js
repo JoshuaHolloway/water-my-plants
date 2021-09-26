@@ -129,7 +129,7 @@ const Auth = () => {
       // Send Push Notification
       console.log('Sending Push...');
 
-      await fetch('http://localhost:5000/api/plants', {
+      await fetch('http://localhost:5000/api/plants/subscribe', {
         method: 'POST',
         body: JSON.stringify(subscription),
         headers: {

@@ -18,7 +18,7 @@ const PlantList = (props) => {
             image={plant.image}
             nickname={plant.nickname} // title={place.title}
             species={plant.species} //description={place.description}
-            h2oFrequency={plant.h2ofrequency} //address={place.address}
+            h2oFrequency={plant.h2oFrequency} //address={place.address}
             // creatorId={place.creator}
             // coordinates={place.location}
             // onDelete={props.onDeletePlace}

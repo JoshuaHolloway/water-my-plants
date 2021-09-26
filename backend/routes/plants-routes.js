@@ -10,7 +10,7 @@ const plantsControllers = require('../controllers/plants-controller');
 // ==============================================
 
 // [GET] /api/plants/
-router.post('/', async (req, res, next) => {
+router.post('/subscribe', async (req, res, next) => {
   console.log('POST to /  (DEBUG)');
   // if (req.method === 'OPTIONS') {
   //   return next();
@@ -27,13 +27,19 @@ router.post('/', async (req, res, next) => {
   // Send 201 - resource created
   res.status(201).json({});
 
-  // Create payload
-  const payload = JSON.stringify({ title: 'Push Test' });
+  const set_push = async (push_title) => {
+    // Create payload
+    const payload = JSON.stringify({ title: push_title });
+    webpush
+      .sendNotification(subscription, payload)
+      .catch((err) => console.error('JOSH\nJOSH\nJOSH\nJOSH: ', err));
+  };
+  set_push('Initial Push');
 
   const now = new Date();
   console.log('time is currently: ', now.getHours(), ' : ', now.getMinutes());
   const hours = 8;
-  const minutes = 37;
+  const minutes = 52;
   const seconds = 0;
   const ms = 0;
   let millisTill_specified_time =
@@ -51,10 +57,7 @@ router.post('/', async (req, res, next) => {
   }
   setTimeout(function () {
     console.log("It's time!!!");
-
-    webpush
-      .sendNotification(subscription, payload)
-      .catch((err) => console.error('JOSH\nJOSH\nJOSH\nJOSH: ', err));
+    set_push('Timed Push');
   }, millisTill_specified_time);
 
   setInterval(() => {
@@ -97,8 +100,8 @@ router.post(
   '/',
   [
     check('nickname').not().isEmpty(),
-    check('species').isLength({ min: 5 }),
-    // check('h2oFrequency').not().isEmpty(),
+    check('species').isLength({ min: 1 }),
+    check('h2oFrequency').not().isEmpty(),
   ],
   plantsControllers.createPlant
 );

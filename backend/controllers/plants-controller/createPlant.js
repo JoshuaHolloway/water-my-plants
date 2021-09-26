@@ -22,14 +22,16 @@ const createPlant = async (req, res, next) => {
   // --------------------------------------------
 
   // -This works because of the body-parser
-  const { nickname, species, h2ofrequency } = req.body;
+  const { nickname, species, h2oFrequency } = req.body;
+
+  console.log('h2oFrequency: ', h2oFrequency);
 
   // --------------------------------------------
 
   const createdPlant = new Plant({
     nickname,
     species,
-    h2ofrequency,
+    h2oFrequency,
     image:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg',
     creator:
