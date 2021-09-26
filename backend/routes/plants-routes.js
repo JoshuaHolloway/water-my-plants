@@ -10,7 +10,7 @@ const plantsControllers = require('../controllers/plants-controller');
 // ==============================================
 
 // [GET] /api/plants/
-router.post('/subscribe', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   console.log('POST to /  (DEBUG)');
   // if (req.method === 'OPTIONS') {
   //   return next();
@@ -38,9 +38,9 @@ router.post('/subscribe', async (req, res, next) => {
 
   const now = new Date();
   console.log('time is currently: ', now.getHours(), ' : ', now.getMinutes());
-  const hours = 8;
-  const minutes = 52;
-  const seconds = 0;
+  const hours = 9;
+  const minutes = 25;
+  const seconds = 30;
   const ms = 0;
   let millisTill_specified_time =
     new Date(
@@ -97,7 +97,7 @@ router.get('/user/:uid', plantsControllers.getPlantsByUserId);
 // -check() runs before out controller runs.
 // -
 router.post(
-  '/',
+  '/add',
   [
     check('nickname').not().isEmpty(),
     check('species').isLength({ min: 1 }),

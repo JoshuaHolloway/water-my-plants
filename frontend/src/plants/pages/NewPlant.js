@@ -83,7 +83,7 @@ const NewPlant = () => {
 
     try {
       const responseData = await sendRequest(
-        `${process.env.REACT_APP_BACKEND}/plants`,
+        `${process.env.REACT_APP_BACKEND}/plants/add`,
         'POST',
         JSON.stringify(plant),
         {
