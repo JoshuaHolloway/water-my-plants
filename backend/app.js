@@ -62,13 +62,6 @@ webpush.setVapidDetails(
   privateVapidKey
 );
 
-// app.post('/*', (req, res) => {
-//   console.log('(DEBUG)  req: ', req);
-//   if (req.method === 'OPTIONS') {
-//     return next();
-//   }
-// });
-
 // ==============================================
 
 // -Add the routes to middleware

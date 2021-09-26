@@ -30,9 +30,37 @@ router.post('/', async (req, res, next) => {
   // Create payload
   const payload = JSON.stringify({ title: 'Push Test' });
 
-  webpush
-    .sendNotification(subscription, payload)
-    .catch((err) => console.error('JOSH\nJOSH\nJOSH\nJOSH: ', err));
+  const now = new Date();
+  console.log('time is currently: ', now.getHours(), ' : ', now.getMinutes());
+  const hours = 8;
+  const minutes = 37;
+  const seconds = 0;
+  const ms = 0;
+  let millisTill_specified_time =
+    new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      hours,
+      minutes,
+      seconds,
+      ms
+    ) - now;
+  if (millisTill_specified_time < 0) {
+    millisTill_specified_time += 86400000; // it's after 10am, try 10am tomorrow.
+  }
+  setTimeout(function () {
+    console.log("It's time!!!");
+
+    webpush
+      .sendNotification(subscription, payload)
+      .catch((err) => console.error('JOSH\nJOSH\nJOSH\nJOSH: ', err));
+  }, millisTill_specified_time);
+
+  setInterval(() => {
+    const t = new Date();
+    console.log(`${t.getHours()} : ${t.getMinutes()} : ${t.getSeconds()}`);
+  }, 1e3);
 });
 
 // ==============================================
