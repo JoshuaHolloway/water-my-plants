@@ -6,6 +6,7 @@ const webpush = require('web-push');
 
 const plantsRoutes = require('./routes/plants-routes');
 const usersRoutes = require('./routes/users-routes');
+const pushRoutes = require('./routes/push-routes');
 
 // const HttpError = require('./models/http-error');
 
@@ -65,6 +66,7 @@ webpush.setVapidDetails(
 // ==============================================
 
 // -Add the routes to middleware
+app.use('/api/push', pushRoutes);
 app.use('/api/plants', plantsRoutes);
 app.use('/api/users', usersRoutes);
 
