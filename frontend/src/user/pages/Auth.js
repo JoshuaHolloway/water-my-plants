@@ -95,19 +95,19 @@ const Auth = () => {
   // --------------------------------------------
 
   const do_push = () => {
-    // ----------------------------------------------
+    // - - - - - - - - - - - - - - - - - - - - -
 
     const publicVapidKey =
       'BJthRQ5myDgc7OSXzPCMftGw-n16F7zQBEN7EUD6XxcfTTvrLGWSIG7y_JxiWtVlCFua0S8MTB5rPziBqNx1qIo';
 
-    // ----------------------------------------------
+    // - - - - - - - - - - - - - - - - - - - - -
 
     // Check for service worker
     if ('serviceWorker' in navigator) {
       send().catch((err) => console.error('serviceWorker error: ', err));
     }
 
-    // ----------------------------------------------
+    // - - - - - - - - - - - - - - - - - - - - -
 
     // Register SW, Register Push, Send Push
     async function send() {
@@ -129,7 +129,7 @@ const Auth = () => {
       // Send Push Notification
       console.log('Sending Push...');
 
-      await fetch(`${process.env.REACT_APP_BACKEND}/plants/subscribe-to-push`, {
+      await fetch('http://localhost:5000/api/plants', {
         method: 'POST',
         body: JSON.stringify(subscription),
         headers: {
@@ -140,7 +140,7 @@ const Auth = () => {
       console.log('Push Sent...');
     }
 
-    // ----------------------------------------------
+    // - - - - - - - - - - - - - - - - - - - - -
 
     function urlBase64ToUint8Array(base64String) {
       const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
@@ -156,11 +156,9 @@ const Auth = () => {
       }
       return outputArray;
     }
-  };
 
-  useEffect(() => {
-    // do_push();
-  }, []);
+    // - - - - - - - - - - - - - - - - - - - - -
+  }; // do_push()
 
   // --------------------------------------------
 

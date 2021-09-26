@@ -119,17 +119,11 @@ const App = () => {
       <Router>
         <MainNavigation />
 
-        <button onClick={() => setShowBlock((prevState) => !prevState)}>
+        {/* <button onClick={() => setShowBlock((prevState) => !prevState)}>
           toggle
-        </button>
+        </button> */}
 
-        {/* {showBlock ? (
-          <div
-            style={{ backgroundColor: 'red', width: 100, height: 100 }}
-          ></div>
-        ) : null} */}
-
-        <Transition in={showBlock} timeout={100}>
+        {/* <Transition in={showBlock} timeout={100}>
           {(state) => (
             // ENTERING, ENTERED, EXITING, EXITED
 
@@ -147,11 +141,9 @@ const App = () => {
               ></div>
             </>
           )}
-        </Transition>
+        </Transition> */}
 
         <main>{routes}</main>
-
-        <p>Process.env.NODE_ENV: {process.env.NODE_ENV}</p>
       </Router>
     </AuthContext.Provider>
   );

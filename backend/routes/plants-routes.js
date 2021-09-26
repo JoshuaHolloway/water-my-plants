@@ -10,7 +10,7 @@ const plantsControllers = require('../controllers/plants-controller');
 // ==============================================
 
 // [GET] /api/plants/
-router.post('/subscribe-to-push', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   console.log('POST to /  (DEBUG)');
   // if (req.method === 'OPTIONS') {
   //   return next();
@@ -34,6 +34,8 @@ router.post('/subscribe-to-push', async (req, res, next) => {
     .sendNotification(subscription, payload)
     .catch((err) => console.error('JOSH\nJOSH\nJOSH\nJOSH: ', err));
 });
+
+// ==============================================
 
 // -register middleware for protected routes below
 router.use(checkAuth);
