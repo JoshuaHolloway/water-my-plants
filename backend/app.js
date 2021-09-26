@@ -27,8 +27,16 @@ app.use(bodyParser.json());
 
 // ==============================================
 
-// CORS
+// app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 
+// -initial JS/CSS files and index.html file, but not for the routes like auth
+app.use(express.static(path.join('public')));
+
+// ==============================================
+
+// -CORS headers not required in production deployment
+// -Only required for development while utilizing
+//  a seperate server for frontend and backend.
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
@@ -46,13 +54,32 @@ app.use((req, res, next) => {
 app.use('/api/plants', plantsRoutes);
 app.use('/api/users', usersRoutes);
 
+// ==============================================
+
+// -Add public folder (which contains the built SPA)
+// -The 404 middleware (below this section)
+//  is no longer needed after adding
+//  this static code addition.
+// -Because, we want all requests going
+//  to *any* URL to be served statically.
+// -i.e., any request that reaches the backend
+//        and was not handled by any route handlers
+//        by this point, will be served the static
+//        assets from public folder (the SPA inside index.html)
+// app.use(express.static(path.join('public')));
+app.use((req, res, next) => {
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+});
+
+// ==============================================
+
 // -Below middleware is executed only if
 //  one of the previous routes did not
 //  send a response.
-app.use((req, res, next) => {
-  const error = new HttpError('Could not find this route - 404', 404);
-  throw error; // throw to default error handling midddleware
-});
+// app.use((req, res, next) => {
+//   const error = new HttpError('Could not find this route - 404', 404);
+//   throw error; // throw to default error handling midddleware
+// });
 
 // ==============================================
 
