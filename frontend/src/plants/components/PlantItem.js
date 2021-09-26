@@ -34,7 +34,7 @@ const PlaceItem = (props) => {
   const onDeleteHandler = async () => {
     try {
       await sendRequest(
-        `http://localhost:5000/api/plants/${props.id}`,
+        `${process.env.REACT_APP_BACKEND}/plants/${props.id}`,
         'DELETE',
         null,
         {

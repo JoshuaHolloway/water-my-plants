@@ -64,7 +64,7 @@ const UpdatePlant = () => {
 
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/plants/${plantId}`,
+          `${process.env.REACT_APP_BACKEND}/plants/${plantId}`,
           'GET',
           null,
           {
@@ -95,7 +95,7 @@ const UpdatePlant = () => {
 
     try {
       const responseData = await sendRequest(
-        `http://localhost:5000/api/plants/${plantId}`,
+        `${process.env.REACT_APP_BACKEND}/plants/${plantId}`,
         'PATCH',
         JSON.stringify(plant),
         {

@@ -93,9 +93,7 @@ mongoose
   )
   .then(() => {
     console.log('Connected to database!');
-    app.listen(5e3, () => {
-      'listening on port 5e3';
-    });
+    app.listen(process.env.PORT || 5e3);
   })
   .catch(() => {
     console.log('Connection to DB failed!');

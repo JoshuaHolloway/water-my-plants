@@ -51,7 +51,7 @@ const Auth = () => {
 
       try {
         const reponseData = await sendRequest(
-          'http://localhost:5000/api/users/login',
+          `${process.env.REACT_APP_BACKEND}/users/login`,
           'POST',
           JSON.stringify({
             email: email,
@@ -73,7 +73,7 @@ const Auth = () => {
 
       try {
         const reponseData = await sendRequest(
-          'http://localhost:5000/api/users/signup',
+          `${process.env.REACT_APP_BACKEND}/users/signup`,
           'POST',
           JSON.stringify({
             name: name,
@@ -129,7 +129,7 @@ const Auth = () => {
       // Send Push Notification
       console.log('Sending Push...');
 
-      await fetch('http://localhost:5000/api/plants/subscribe-to-push', {
+      await fetch(`${process.env.REACT_APP_BACKEND}/plants/subscribe-to-push`, {
         method: 'POST',
         body: JSON.stringify(subscription),
         headers: {

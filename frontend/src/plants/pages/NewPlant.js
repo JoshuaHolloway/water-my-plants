@@ -83,7 +83,7 @@ const NewPlant = () => {
 
     try {
       const responseData = await sendRequest(
-        'http://localhost:5000/api/plants',
+        `${process.env.REACT_APP_BACKEND}/plants`,
         'POST',
         JSON.stringify(plant),
         {

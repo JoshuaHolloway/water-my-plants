@@ -34,7 +34,7 @@ const UsersPlants = () => {
       const fetchPlants = async () => {
         try {
           const responseData = await sendRequest(
-            `http://localhost:5000/api/plants/user/${auth.userId}`,
+            `${process.env.REACT_APP_BACKEND}/plants/user/${auth.userId}`,
             'GET', // method
             null, // body
             {
