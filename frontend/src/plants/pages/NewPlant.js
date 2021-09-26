@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 
+import register_push from '../../shared/helpers/do_push';
+
 // ==============================================
 
 const NewPlant = () => {
@@ -97,6 +99,11 @@ const NewPlant = () => {
         responseData
       );
 
+      // -Plant has been added successfully.
+      // -Register push notifications according to
+      //  specified h2o-frequency:
+      register_push(10, 4);
+
       // -Redirect the user to homepage
       history.push('/');
     } catch (err) {
@@ -117,9 +124,7 @@ const NewPlant = () => {
           onChange={onNicknameChangeHandler}
         />
       </label>
-
       <br />
-
       <label htmlFor='species'>
         Species:
         <input
@@ -129,9 +134,7 @@ const NewPlant = () => {
           onChange={onSpeciesChangeHandler}
         />
       </label>
-
       <br />
-
       <label htmlFor='image'>
         Image:
         <input
@@ -141,9 +144,7 @@ const NewPlant = () => {
           onChange={onImageChangeHandler}
         />
       </label>
-
       <br />
-
       <label htmlFor='h2oFreq'>
         h2oFrequency:
         <input
@@ -153,9 +154,7 @@ const NewPlant = () => {
           onChange={onH2oFreqChangeHandler}
         />
       </label>
-
       <br />
-
       <button type='submit'>Submit</button>
     </form>
   );

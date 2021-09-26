@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from 'react';
 
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
-import register_push from '../../shared/helpers/do_push';
 
 // ==============================================
 
@@ -145,10 +144,6 @@ const Auth = () => {
 
       <button type='submit' onClick={switchModeHandler}>
         {isLoginMode ? 'SIGNUP' : 'LOGIN'}
-      </button>
-
-      <button onClick={() => register_push(9, 53)}>
-        Send PUSH Notification
       </button>
     </>
   );
