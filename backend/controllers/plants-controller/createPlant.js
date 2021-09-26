@@ -29,7 +29,7 @@ const createPlant = async (req, res, next) => {
   const createdPlant = new Plant({
     nickname,
     species,
-    // h2ofrequency,
+    h2ofrequency,
     image:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg',
     creator:

@@ -72,7 +72,7 @@ router.use(checkAuth);
 
 // ==============================================
 // == BELOW ARE PROTECTED ROUTES
-// == Hackers: Please do NOT hack below routes :)
+// == Hackers: Please do NOT hack code below :)
 // ==============================================
 
 // /api/plants/user/u1

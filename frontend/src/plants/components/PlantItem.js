@@ -65,8 +65,28 @@ const PlaceItem = (props) => {
       </Modal>
 
       <li>
-        <div>
-          <h2>{props.nickname}</h2>
+        <div style={{ border: 'solid black 1px' }}>
+          <p>
+            Nickname:{' '}
+            <span style={{ backgroundColor: 'lightgrey' }}>
+              {props.nickname}
+            </span>
+          </p>
+
+          <p>
+            Species:{' '}
+            <span style={{ backgroundColor: 'lightgrey' }}>
+              {props.species}
+            </span>
+          </p>
+
+          <p>
+            H2O-Frequency :{' '}
+            <span style={{ backgroundColor: 'lightgrey' }}>
+              {props.h2oFrequency}
+            </span>
+          </p>
+
           <button onClick={onDeleteHandler}>DELETE</button>
           <button>
             <NavLink to={`/plants/${props.id}`}>UPDATE</NavLink>
