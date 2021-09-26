@@ -5,6 +5,7 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom';
+import Transition from 'react-transition-group/Transition';
 
 import PublicHomePage from './user/pages/PublicHomePage';
 import UsersPlants from './plants/pages/UsersPlants';
@@ -100,6 +101,11 @@ const App = () => {
 
   // --------------------------------------------
 
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [showBlock, setShowBlock] = useState(false);
+
+  // --------------------------------------------
+
   return (
     // -bind the value we manage with our context
     //  (which we initialized in createContext() [auth-context.js])
@@ -112,6 +118,37 @@ const App = () => {
     >
       <Router>
         <MainNavigation />
+
+        <button onClick={() => setShowBlock((prevState) => !prevState)}>
+          toggle
+        </button>
+
+        {/* {showBlock ? (
+          <div
+            style={{ backgroundColor: 'red', width: 100, height: 100 }}
+          ></div>
+        ) : null} */}
+
+        <Transition in={showBlock} timeout={100}>
+          {(state) => (
+            // ENTERING, ENTERED, EXITING, EXITED
+
+            <>
+              <p>{state}</p>
+              <p>{state === 'exited' ? 0 : 1}</p>
+              <div
+                style={{
+                  backgroundColor: 'red',
+                  width: 100,
+                  height: 100,
+                  transition: 'opacity 1s ease-out',
+                  opacity: state === 'exited' ? 0 : 1,
+                }}
+              ></div>
+            </>
+          )}
+        </Transition>
+
         <main>{routes}</main>
       </Router>
     </AuthContext.Provider>
